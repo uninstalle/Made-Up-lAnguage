@@ -2,7 +2,8 @@ package mua;
 
 import java.util.Scanner;
 
-import mua.operation.Operation;
+import mua.operation.*;
+import mua.value.*;
 
 public class Main {
     static public Scanner stdin = new Scanner(System.in);
@@ -10,6 +11,7 @@ public class Main {
         while (stdin.hasNext()) {
             String cmd = stdin.nextLine();
             cmd = cmd.replaceAll(":", "thing ");
+            cmd = cmd.replaceAll("if", "_if");
             Value retVal = Operation.parse(cmd);
         }
         stdin.close();

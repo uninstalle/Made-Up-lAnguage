@@ -1,7 +1,7 @@
 package mua;
 
-import mua.operation.Operation;
 import java.util.HashMap;
+import mua.value.*;
 
 public class Name {
     String name;
@@ -28,12 +28,9 @@ public class Name {
 
     public static Name build(String name) throws RuntimeException {
         if (name.matches("^\"?[A-Za-z]([A-Za-z0-9_])*"))
-            if (!Operation.class.getName().equals(name))
-                return new Name(name);
-            else
-                throw new RuntimeException("Illegal name");
+            return new Name(name);
         else
-            throw new RuntimeException("Illegal name");
+            return null;
     }
 
     public static Value get(Name name) {
