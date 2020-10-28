@@ -39,6 +39,10 @@ public abstract class Operation {
         return parseValue(new Arguments(str));
     }
 
+    public static Value parse(Arguments args) {
+        return parseValue(args);
+    }
+
     public static Value parseValue(Arguments args) {
         String opname = args.nextToken();
         Operation op;

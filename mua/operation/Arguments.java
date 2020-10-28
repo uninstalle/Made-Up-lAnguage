@@ -2,32 +2,32 @@ package mua.operation;
 
 // Class Arguments serve as a wrapper of String
 
-class Arguments {
+public class Arguments {
     String args;
 
     Arguments() {
         args = new String();
     }
 
-    Arguments(String str) {
-        args = str;
+    public Arguments(String str) {
+        args = str.trim();
     }
 
-    String get() {
+    public String get() {
         return args;
     }
 
-    void set(String str) {
+    public void set(String str) {
         args = str;
     }
 
-    String nextSubStr() throws RuntimeException {
+    public String nextSubStr() throws RuntimeException {
         String substr;
         if (args == null || args == "")
             throw new RuntimeException("Empty argument");
         if (args.contains(" ")) {
             substr = args.substring(0, args.indexOf(" "));
-            args = args.substring(args.indexOf(" ") + 1);
+            args = args.substring(args.indexOf(" ") + 1).trim();
         } else {
             substr = args;
             args = "";
@@ -35,7 +35,23 @@ class Arguments {
         return substr;
     }
 
-    String nextToken() {
+    public String peekNextSubStr() throws RuntimeException {
+        String substr;
+        if (args == null || args == "")
+            throw new RuntimeException("Empty argument");
+        if (args.contains(" ")) {
+            substr = args.substring(0, args.indexOf(" "));
+        } else {
+            substr = args;
+        }
+        return substr;
+    }
+
+    public boolean isEmpty() {
+        return args == null || args.equals("");
+    }
+
+    public String nextToken() {
         String opname = nextSubStr();
 
         // creating list
@@ -45,12 +61,25 @@ class Arguments {
             if (opname.endsWith("]"))
                 level--;
             while (level != 0) {
-                String nextArg = nextSubStr();
+                String nextArg = " " + nextSubStr();
                 opname += nextArg;
                 if (nextArg.startsWith("["))
                     level++;
                 if (nextArg.endsWith("]"))
                     level--;
+            }
+        }
+        // creating infix exp
+        else if (opname.startsWith("(")) {
+            int level = 0;
+            level += opname.length() - opname.replaceAll("\\(", "").length();
+            level -= opname.length() - opname.replaceAll("\\)", "").length();
+
+            while (level != 0) {
+                String nextArg = " " + nextSubStr();
+                opname += nextArg;
+                level += nextArg.length() - nextArg.replaceAll("\\(", "").length();
+                level -= nextArg.length() - nextArg.replaceAll("\\)", "").length();
             }
         }
 

@@ -9,6 +9,6 @@ class isnumber extends Operation {
     }
 
     Value execute(Value value) {
-        return Bool.build(value.isNumber());
+        return Bool.build(value.isNumber() || value.isWord() && mua.value.Number.isNumber(((Word) value).toString()));
     }
 }

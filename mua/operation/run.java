@@ -14,10 +14,11 @@ class run extends Operation {
     }
 
     Value execute(List list) {
-        String op = list.toString().substring(1, list.toString().length() - 2);
+        String op = list.toString().substring(1, list.toString().length() - 1);
+        Arguments args = new Arguments(op);
         Value retval = Value.build("[]");
-        while (!op.isEmpty())
-            retval = parse(op);
+        while (!args.isEmpty())
+            retval = parse(args);
         return retval;
     }
 }

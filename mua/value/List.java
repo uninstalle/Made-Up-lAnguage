@@ -16,9 +16,9 @@ public class List extends Value {
                 level++;
             if (element.endsWith("]"))
                 level--;
-            if (level != 0)
-                return false;
         }
+        if (level != 0)
+            return false;
         return true;
     }
 

@@ -19,11 +19,8 @@ public class Name {
 
     static HashMap<String, Value> NameList = new HashMap<String, Value>();
 
-    public static void assign(Name name, Value value) throws RuntimeException {
-        if (!NameList.containsKey(name.toString()))
+    public static void assign(Name name, Value value) {
             NameList.put(name.toString(), value);
-        else
-            throw new RuntimeException("Variable name " + name.toString() + " has been used");
     }
 
     public static Name build(String name) throws RuntimeException {
@@ -46,7 +43,7 @@ public class Name {
             return null;
         else {
             Value v = get(name);
-            NameList.remove(name, get(name));
+            NameList.remove(name.toString());
             return v;
         }
     }
