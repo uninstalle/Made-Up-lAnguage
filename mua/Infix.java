@@ -1,6 +1,7 @@
 package mua;
 
 import java.util.Stack;
+
 import mua.value.*;
 import mua.operation.Arguments;
 import mua.operation.*;
@@ -8,7 +9,7 @@ import mua.operation.*;
 public class Infix {
     String value;
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Infix exp = Infix.build("(add (5%3-3*3/(5+4)) 5)");
         System.out.println(exp.getValue().toString());
     }
@@ -31,6 +32,10 @@ public class Infix {
             return null;
     }
 
+    /**
+     * Tokenize the original infix expression string. Add a space between any pair
+     * of operators/operands.
+     */
     void tokenize() {
         value = value.replaceAll("(?=[\\(\\)])", " ");
         value = value.replaceAll("(?<=[\\(\\)])", " ");
@@ -38,6 +43,11 @@ public class Infix {
         value = value.replaceAll("(?<=([0-9A-Za-z]{1,50}|\\))\\s{0,50})(?=[\\+\\-\\*/%])", " ");
     }
 
+    /**
+     * Get the value of the infix expression.
+     *
+     * @return The value of the infix expression
+     */
     public Value getValue() {
 
         tokenize();
@@ -49,20 +59,18 @@ public class Infix {
         while (!args.isEmpty()) {
             String arg = args.peekNextSubStr();
             if (arg.matches("[\\+\\-\\*/%\\(\\)]")) {
+                // next arg is an operator
                 String op = args.nextSubStr();
                 while (true) {
                     if (op.equals(")")) {
-                        boolean breakout = false;
                         while (true) {
                             String ops = s1.pop();
                             if (ops.equals("(")) {
-                                breakout = true;
                                 break;
                             } else
                                 s2.push(ops);
                         }
-                        if (breakout)
-                            break;
+                        break;
                     } else if (s1.empty() || s1.peek().equals("(")) {
                         s1.push(op);
                         break;
@@ -78,6 +86,7 @@ public class Infix {
                     }
                 }
             } else {
+                // next arg is an operand(or a operation, execute it to get return value then)
                 Value retVal = Operation.parse(args);
                 s2.push(((mua.value.Number) retVal).toString());
             }
@@ -113,7 +122,7 @@ public class Infix {
                 }
                 s1.push(String.valueOf(val2));
             } else if (element.matches("[\\(\\)]")) {
-
+                // should not be any () exists
             } else {
                 s1.push(element);
             }

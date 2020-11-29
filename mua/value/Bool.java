@@ -34,4 +34,9 @@ public class Bool extends Value {
     public String toString() {
         return value;
     }
+
+    @Override
+    public String toRawString() {
+        return value;
+    }
 }

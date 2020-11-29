@@ -38,4 +38,9 @@ public class List extends Value {
     public String toString() {
         return value;
     }
+
+    @Override
+    public String toRawString() {
+        return value;
+    }
 }

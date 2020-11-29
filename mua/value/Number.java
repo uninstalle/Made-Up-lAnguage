@@ -32,6 +32,11 @@ public class Number extends Value {
         return value;
     }
 
+    @Override
+    public String toRawString() {
+        return value;
+    }
+
     public int toInt() {
         return Integer.parseInt(value);
     }

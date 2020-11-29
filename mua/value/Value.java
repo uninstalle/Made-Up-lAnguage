@@ -36,4 +36,10 @@ abstract public class Value {
         return this instanceof Bool;
     }
 
+    /**
+     * This will return the raw string of class {@code Value} stores.
+     * @return raw string of the value
+     */
+    public abstract String toRawString();
+
 }

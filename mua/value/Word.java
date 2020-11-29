@@ -43,4 +43,8 @@ public class Word extends Value {
         return value.substring(1);
     }
 
+    @Override
+    public String toRawString() {
+        return value;
+    }
 }

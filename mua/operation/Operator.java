@@ -3,6 +3,9 @@ package mua.operation;
 import mua.value.*;
 import mua.value.Number;
 
+/**
+ * Class for all operators. Assuming that all operators are binary.
+ */
 abstract class Operator extends Operation {
     @Override
     Value execute(Arguments args) {
