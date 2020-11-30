@@ -1,16 +1,29 @@
 package mua.value;
 
+/**
+ * This class contains a boolean value. It can be true or false.
+ */
 public class Bool extends Value {
-    String value;
+    Boolean value;
 
     Bool(String value) {
-        this.value = value;
+        if (value.equals("true"))
+            this.value = true;
+        else if (value.equals("false"))
+            this.value = false;
+        else
+            throw new RuntimeException("Illegal bool value");
     }
 
     public static boolean isBool(String value) {
         return value.equals("true") || value.equals("false");
     }
 
+    /**
+     * Build a {@code Bool} from given string.
+     * @param value String contains a {@code Bool} value
+     * @return {@code Bool} object, or null if the string contains no {@code Bool} value
+     */
     public static Bool build(String value) {
         value = value.trim();
         if (Bool.isBool(value))
@@ -19,24 +32,26 @@ public class Bool extends Value {
             return null;
     }
 
+    /**
+     * Build a {@code Bool} from given Boolean
+     * @param value Boolean value
+     * @return {@code Bool} object
+     */
     public static Bool build(Boolean value) {
-        if (value)
-            return new Bool("true");
-        else
-            return new Bool("false");
+        return new Bool(value.toString());
     }
 
     public boolean get() {
-        return value.equals("true");
+        return value;
     }
 
     @Override
     public String toString() {
-        return value;
+        return value.toString();
     }
 
     @Override
     public String toRawString() {
-        return value;
+        return value.toString();
     }
 }

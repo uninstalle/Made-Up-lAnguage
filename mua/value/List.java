@@ -1,5 +1,8 @@
 package mua.value;
 
+/**
+ * This class contains a list value. It stores the raw string of the list.
+ */
 public class List extends Value {
     String value;
 
@@ -7,21 +10,29 @@ public class List extends Value {
         this.value = value;
     }
 
+    /**
+     * Test if the string has a valid {@code List}. It should starts with '[', ends
+     * with ']' and has the same number of '[' and ']'.
+     * 
+     * @param value String that may contain a list
+     * @return Whether the string contains a list
+     */
     public static boolean isList(String value) {
         if (!(value.startsWith("[") && value.endsWith("]")))
             return false;
+
         int level = 0;
-        for (String element : value.split(" ")) {
-            if (element.startsWith("["))
-                level++;
-            if (element.endsWith("]"))
-                level--;
-        }
-        if (level != 0)
-            return false;
-        return true;
+        level += value.length() - value.toString().replace("[", "").length();
+        level -= value.length() - value.toString().replace("]", "").length();
+
+        return level == 0;
     }
 
+    /**
+     * Build a {@code List} from given string.
+     * 
+     * @return {@code List} object, or null if it has no list object
+     */
     public static List build(String value) {
         value = value.trim();
         if (List.isList(value))

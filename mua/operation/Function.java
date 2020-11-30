@@ -4,7 +4,6 @@ import mua.Namespace;
 import mua.value.List;
 import mua.value.Value;
 
-
 public class Function extends Operation {
 
     public static void main(String[] args) {
@@ -14,6 +13,15 @@ public class Function extends Operation {
     String[] parameters;
     String operations;
 
+    /**
+     * Build a {@code Function} object from the given list.
+     * 
+     * <p>
+     * This function will not check if the list is a valid function
+     * 
+     * @param functionList A list that contains a function
+     * @return The {@code Function} object built
+     */
     public static Function build(List functionList) {
         String functionString = functionList.toString().substring(1, functionList.toString().length() - 1);
         Arguments functionCode = new Arguments(functionString);
@@ -26,6 +34,17 @@ public class Function extends Operation {
         return function;
     }
 
+    /**
+     * Test if the {@code Value} contains a valid function, which is a list that
+     * contains two list elements.
+     * 
+     * <p>
+     * This function will not check if the two list elements have valid parameter
+     * declaration and code.
+     * 
+     * @param functionList A list that may contain a function
+     * @return Whether the list is a function
+     */
     public static boolean isFunction(Value functionList) {
         if (!functionList.isList())
             return false;
@@ -46,7 +65,6 @@ public class Function extends Operation {
             code = code.replaceAll("(?<=[\\s])" + para + "$", arg);
             code = code.replaceAll("^" + para + "(?=[\\s])", arg);
         }
-        code = code.replace("return", "_return");
         return code;
     }
 

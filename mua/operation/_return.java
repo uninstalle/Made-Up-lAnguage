@@ -2,7 +2,7 @@ package mua.operation;
 
 import mua.value.Value;
 
-public class _return extends Operation{
+public class _return extends Operation {
     @Override
     Value execute(Arguments args) throws RuntimeException {
         Value v = parseValue(args);

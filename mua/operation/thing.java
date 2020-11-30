@@ -7,7 +7,7 @@ import mua.Namespace;
 class thing extends Operation {
     @Override
     Value execute(Arguments args) {
-        return execute(parseName(args));
+        return execute(parseNameLabel(args));
     }
 
     Value execute(Name name) {

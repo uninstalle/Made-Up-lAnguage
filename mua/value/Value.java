@@ -2,8 +2,16 @@ package mua.value;
 
 import mua.Infix;
 
-abstract public class Value {
+/**
+ * {@code Value} is the abstract class for all value in MUA. It has a set of useful static methods.
+ */
+public abstract class Value {
 
+    /**
+     * Build a {@code Value} from given string.
+     * @param value a string that may contain a Value
+     * @return {@code Value} object, or null if it has no valid value
+     */
     public static Value build(String value) {
         value = value.trim();
         if (Infix.isInfix(value))

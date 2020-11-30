@@ -1,5 +1,8 @@
 package mua.value;
 
+/**
+ * This class contains a number value. It can be integer or float, but always convert to float in calculations.
+ */
 public class Number extends Value {
     String value;
 
@@ -19,6 +22,11 @@ public class Number extends Value {
         return value.matches("^(-?\\d+)?\\.\\d+");
     }
 
+    /**
+     * Build a {@code Number} from given string.
+     * @param value String that may contain a {@code Number}
+     * @return {@code Number} object, or null if it has no valid {@code Number}
+     */
     public static Number build(String value) {
         value = value.trim();
         if (Number.isNumber(value))

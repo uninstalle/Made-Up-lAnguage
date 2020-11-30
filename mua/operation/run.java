@@ -7,7 +7,7 @@ class run extends Operation {
     Value execute(Arguments args) {
         Value v = parseValue(args);
         if (v.isList())
-            return execute((List)v);
+            return execute((List) v);
         else
             throw new RuntimeException("Type List expected in run");
 

@@ -42,7 +42,7 @@ public abstract class Operation {
      * 
      * @param args The Arguments object containing command string
      * @return The return value of the command string
-     * @throws RuntimeException When the arguments are invalid
+     * @throws RuntimeException When the operation causes an exception
      */
     abstract Value execute(Arguments args) throws RuntimeException;
 
@@ -51,7 +51,7 @@ public abstract class Operation {
      *
      * <p>
      * This function will try to build predefined operation according to the op name
-     * string. Customized function is not supported.
+     * string. It doesn't contain the customized functions.
      * </p>
      * 
      * @param opname The string of the operation name
@@ -75,21 +75,14 @@ public abstract class Operation {
      * @return If the operation exists
      */
     static boolean isOperation(String opname) {
-        Operation op;
-        try {
-            Class<?> opClass = Class.forName("mua.operation." + opname);
-            op = (Operation) opClass.getDeclaredConstructor().newInstance();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        return build(opname) != null;
     }
 
     /**
      * Starting recursive parsing.
      *
      * @param str The complete command string
-     * @return The return value of the command string
+     * @return The return value of the command string, or null if it is not valid
      */
     public static Value parse(String str) {
         return parseValue(new Arguments(str));
@@ -98,7 +91,7 @@ public abstract class Operation {
     /**
      * @see #parse(String)
      * @param args The Arguments object containing command string
-     * @return The return value of the command string
+     * @return The return value of the command string, or null if it is not valid
      */
     public static Value parse(Arguments args) {
         return parseValue(args);
@@ -114,44 +107,65 @@ public abstract class Operation {
      * </p>
      * 
      * @param args The Arguments object containing command string
-     * @return The parsed value
+     * @return The parsed value, or null if it is not a valid value
      */
     public static Value parseValue(Arguments args) {
         String opname = args.nextToken();
 
+        // Test if it is a function
         Function fun = Namespace.getFunction(opname);
         if (fun != null)
             return fun.execute(args);
+        // Test if it is an operation
         Operation op = Operation.build(opname);
         if (op != null)
             return op.execute(args);
-        else
-            return Value.build(opname);
+        return Value.build(opname);
     }
 
     /**
      * Try to parse the first token of the command string as a name.
      *
      * <p>
-     * This function will get the first token of the arguments(separated by blank),
-     * and try to parse it as an operation first. If it is not, then take it as a
-     * name.
+     * This function will get the first token of the arguments(separated by space),
+     * and try to parse it as a function or operation first. If it is not, then take
+     * it as a name. Name should be a Word.
      * </p>
      * 
      * @param args The Arguments object containing command string
-     * @return The parsed name
+     * @return The parsed name, or null if it is not a valid name
      */
     static Name parseName(Arguments args) {
         String opname = args.nextToken();
-        Operation op;
 
-        // Try to build an operation first in case that building a variable named the
-        // same as an operation
-        op = Operation.build(opname);
+        // Try to build a function or operation first in case that building a variable
+        // named the same as an function or operation
+        Function fun = Namespace.getFunction(opname);
+        if (fun != null)
+            return parseName(new Arguments(fun.execute(args).toString()));
+        Operation op = Operation.build(opname);
         if (op != null)
             return parseName(new Arguments(op.execute(args).toString()));
-        else
-            return Name.build(opname);
+        return Name.build(Word.build(opname));
+    }
+
+    /**
+     * This is a special form of parseName for Operation {@code thing}. {@code Name}
+     * in {@code thing} operation has no " mark.
+     * 
+     * @param args The Arguments object containing command string
+     * @return The parsed name, or null if it is not a valid name
+     */
+    static Name parseNameLabel(Arguments args) {
+        String opname = args.nextToken();
+
+        Function fun = Namespace.getFunction(opname);
+        if (fun != null)
+            return parseNameLabel(new Arguments(fun.execute(args).toString()));
+        Operation op = Operation.build(opname);
+        if (op != null)
+            return parseNameLabel(new Arguments(op.execute(args).toString()));
+        return Name.build(opname);
     }
 
 }
