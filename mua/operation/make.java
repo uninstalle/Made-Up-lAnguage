@@ -2,6 +2,7 @@ package mua.operation;
 
 import mua.value.*;
 import mua.Name;
+import mua.Namespace;
 
 class make extends Operation {
 
@@ -11,11 +12,10 @@ class make extends Operation {
     }
 
     Value execute(Name name, Value value) {
-        try {
-            Name.assign(name, value);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        if (Function.isFunction(value))
+            Namespace.assignFunction(name.toString(), Function.build((List) value));
+        else
+            Namespace.assign(name, value);
         return value;
     }
 }

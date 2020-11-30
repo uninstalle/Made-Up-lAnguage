@@ -8,14 +8,14 @@ public class Word extends Value {
         this.value = value;
     }
 
-    public Number toNumber() throws ClassCastException {
+    public Number toNumber() {
         if (Number.isNumber(value.substring(1)))
             return new Number(value.substring(1));
         else
             throw new ClassCastException("Cannot convert word to number");
     }
 
-    public Bool toBool() throws ClassCastException {
+    public Bool toBool() {
         if (Bool.isBool(value.substring(1)))
             return new Bool(value.substring(1));
         else

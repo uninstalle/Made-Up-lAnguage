@@ -2,6 +2,7 @@ package mua.operation;
 
 import mua.value.*;
 import mua.Name;
+import mua.Namespace;
 
 class isname extends Operation {
     @Override
@@ -14,7 +15,7 @@ class isname extends Operation {
     }
 
     Value execute(Word name) {
-        boolean isName = Name.get(name.toString()) != null;
+        boolean isName = Namespace.get(name.toString()) != null;
         return Bool.build(isName);
     }
 }

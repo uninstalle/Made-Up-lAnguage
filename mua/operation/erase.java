@@ -2,6 +2,7 @@ package mua.operation;
 
 import mua.value.*;
 import mua.Name;
+import mua.Namespace;
 
 class erase extends Operation {
     @Override
@@ -10,6 +11,6 @@ class erase extends Operation {
     }
 
     Value execute(Name name) {
-        return Name.erase(name);
+        return Namespace.erase(name);
     }
 }

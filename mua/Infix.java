@@ -6,6 +6,12 @@ import mua.value.*;
 import mua.operation.Arguments;
 import mua.operation.*;
 
+/**
+ * This class accepts a string of infix expression.
+ * 
+ * <p>
+ * To get the value of the infix expression, use {@code getValue} method.
+ */
 public class Infix {
     String value;
 
@@ -19,9 +25,7 @@ public class Infix {
     }
 
     public static boolean isInfix(String value) {
-        if (!(value.startsWith("(") && value.endsWith(")")))
-            return false;
-        return true;
+        return value.startsWith("(") && value.endsWith(")");
     }
 
     public static Infix build(String value) {
@@ -64,24 +68,27 @@ public class Infix {
                 while (true) {
                     if (op.equals(")")) {
                         while (true) {
+                            // keep popping until the matched left( is found
                             String ops = s1.pop();
-                            if (ops.equals("(")) {
+                            if (ops.equals("("))
                                 break;
-                            } else
-                                s2.push(ops);
+                            s2.push(ops);
                         }
                         break;
                     } else if (s1.empty() || s1.peek().equals("(")) {
+                        // first in stack or after left(, just push it
                         s1.push(op);
                         break;
-                    } else if ((s1.peek().equals("+") || s1.peek().equals("-"))
-                            && (op.equals("*") || op.equals("/") || op.equals("%"))) {
+                    } else if ((s1.peek().matches("[\\+\\-]")) && op.matches("[\\*/%]")) {
+                        // current operator has higher priority
                         s1.push(op);
                         break;
                     } else if (op.equals("(")) {
+                        // current operator is left(, just push it
                         s1.push(op);
                         break;
                     } else {
+                        // current operator has less or same priority
                         s2.push(s1.pop());
                     }
                 }

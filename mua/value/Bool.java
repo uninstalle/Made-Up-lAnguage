@@ -3,7 +3,7 @@ package mua.value;
 public class Bool extends Value {
     String value;
 
-    public Bool(String value) {
+    Bool(String value) {
         this.value = value;
     }
 

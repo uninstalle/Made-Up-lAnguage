@@ -6,13 +6,15 @@ import mua.operation.*;
 import mua.value.*;
 
 public class Main {
-    static public Scanner stdin = new Scanner(System.in);
-    static public void main(String[] args) {
-        while (stdin.hasNext()) {
+    public static final Scanner stdin = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (stdin.hasNextLine()) {
             String cmd = stdin.nextLine();
-            cmd = cmd.replaceAll(":", "thing ");
-            cmd = cmd.replaceAll("if", "_if");
-            Value retVal = Operation.parse(cmd);
+            cmd = cmd.replace(":", "thing ");
+            cmd = cmd.replace("if", "_if");
+            if (!cmd.equals(""))
+                Operation.parse(cmd);
         }
         stdin.close();
     }

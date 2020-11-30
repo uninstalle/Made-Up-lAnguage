@@ -3,7 +3,7 @@ package mua.value;
 public class Number extends Value {
     String value;
 
-    public Number(String value) {
+    Number(String value) {
         this.value = value;
     }
 
