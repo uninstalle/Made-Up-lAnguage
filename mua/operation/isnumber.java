@@ -2,6 +2,11 @@ package mua.operation;
 
 import mua.value.*;
 
+/**
+ * isnumber [Value]
+ * <p>
+ * Return if the value is Number or can be converted to Number
+ */
 class isnumber extends Operation {
     @Override
     Value execute(Arguments args) {

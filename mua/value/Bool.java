@@ -12,7 +12,7 @@ public class Bool extends Value {
         else if (value.equals("false"))
             this.value = false;
         else
-            throw new RuntimeException("Illegal bool value");
+            throw new IllegalArgumentException("Trying building a Bool with illegal value:" + value);
     }
 
     public static boolean isBool(String value) {
@@ -21,8 +21,10 @@ public class Bool extends Value {
 
     /**
      * Build a {@code Bool} from given string.
+     * 
      * @param value String contains a {@code Bool} value
-     * @return {@code Bool} object, or null if the string contains no {@code Bool} value
+     * @return {@code Bool} object, or null if the string contains no {@code Bool}
+     *         value
      */
     public static Bool build(String value) {
         value = value.trim();
@@ -34,6 +36,7 @@ public class Bool extends Value {
 
     /**
      * Build a {@code Bool} from given Boolean
+     * 
      * @param value Boolean value
      * @return {@code Bool} object
      */

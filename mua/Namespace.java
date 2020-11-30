@@ -12,6 +12,10 @@ public class Namespace {
     // initally global
     static Namespace curSpace = global;
 
+    public static void initializeGlobalSpace() {
+        assign(Name.build("pi"), Value.build("3.14159"));
+    }
+
     public static void addNestedNamespace() {
         curSpace = new Namespace(curSpace);
     }

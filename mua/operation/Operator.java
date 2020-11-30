@@ -4,7 +4,8 @@ import mua.value.*;
 import mua.value.Number;
 
 /**
- * Class for all operators. Assuming that all operators are binary.
+ * The abstract class for all operators of MUA. Assuming that all operators are
+ * binary.
  */
 abstract class Operator extends Operation {
     @Override
@@ -15,6 +16,9 @@ abstract class Operator extends Operation {
     abstract Value execute(Value a, Value b);
 }
 
+/**
+ * add [Value] [Value]
+ */
 class add extends Operator {
 
     @Override
@@ -31,6 +35,9 @@ class add extends Operator {
     }
 }
 
+/**
+ * substract [Value] [Value]
+ */
 class sub extends Operator {
 
     @Override
@@ -47,6 +54,9 @@ class sub extends Operator {
     }
 }
 
+/**
+ * multiply [Value] [Value]
+ */
 class mul extends Operator {
 
     @Override
@@ -63,6 +73,9 @@ class mul extends Operator {
     }
 }
 
+/**
+ * divide [Value] [Value]
+ */
 class div extends Operator {
 
     @Override
@@ -79,6 +92,9 @@ class div extends Operator {
     }
 }
 
+/**
+ * mod [Value] [Value]
+ */
 class mod extends Operator {
 
     @Override
@@ -95,6 +111,9 @@ class mod extends Operator {
     }
 }
 
+/**
+ * equal [Value] [Value]
+ */
 class eq extends Operator {
 
     @Override
@@ -119,6 +138,9 @@ class eq extends Operator {
     }
 }
 
+/**
+ * greater [Value] [Value]
+ */
 class gt extends Operator {
 
     @Override
@@ -143,6 +165,9 @@ class gt extends Operator {
     }
 }
 
+/**
+ * less than [Value] [Value]
+ */
 class lt extends Operator {
 
     @Override
@@ -167,6 +192,9 @@ class lt extends Operator {
     }
 }
 
+/**
+ * and [Value] [Value]
+ */
 class and extends Operator {
 
     @Override
@@ -175,10 +203,13 @@ class and extends Operator {
     }
 
     Value execute(Bool a, Bool b) {
-        return Bool.build(a.get() & b.get());
+        return Bool.build(a.get() && b.get());
     }
 }
 
+/**
+ * or [Value] [Value]
+ */
 class or extends Operator {
 
     @Override
@@ -187,10 +218,13 @@ class or extends Operator {
     }
 
     Value execute(Bool a, Bool b) {
-        return Bool.build(a.get() | b.get());
+        return Bool.build(a.get() || b.get());
     }
 }
 
+/**
+ * not [Value]
+ */
 class not extends Operator {
     @Override
     Value execute(Arguments args) {

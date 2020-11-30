@@ -1,5 +1,7 @@
 package mua.operation;
 
+import mua.Main;
+
 /**
  * A wrapper of command string.
  *
@@ -41,12 +43,14 @@ public class Arguments {
      * </p>
      * 
      * @return Substring
-     * @throws RuntimeException If the {@code Arguments} is null or empty
      */
-    public String nextSubStr() throws RuntimeException {
+    public String nextSubStr() {
         String substr;
-        if (args == null || args.equals(""))
-            throw new RuntimeException("Empty argument");
+        if (args == null)
+            throw new IllegalStateException("Argument is null");
+        else if (args.equals(""))
+            args = Main.getNextCommand().trim();
+
         if (args.contains(" ")) {
             substr = args.substring(0, args.indexOf(" "));
             args = args.substring(args.indexOf(" ") + 1).trim();
@@ -62,17 +66,11 @@ public class Arguments {
      *
      * @see #nextSubStr().
      * @return Substring
-     * @throws RuntimeException If the {@code Arguments} is null or empty
      */
-    public String peekNextSubStr() throws RuntimeException {
-        String substr;
-        if (args == null || args.equals(""))
-            throw new RuntimeException("Empty argument");
-        if (args.contains(" ")) {
-            substr = args.substring(0, args.indexOf(" "));
-        } else {
-            substr = args;
-        }
+    public String peekNextSubStr() {
+        String backup = args;
+        String substr = nextSubStr();
+        args = backup;
         return substr;
     }
 

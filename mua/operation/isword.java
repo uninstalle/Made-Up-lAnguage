@@ -2,6 +2,11 @@ package mua.operation;
 
 import mua.value.*;
 
+/**
+ * isword [Value]
+ * <p>
+ * Return if the value is Word
+ */
 class isword extends Operation {
     @Override
     Value execute(Arguments args) {

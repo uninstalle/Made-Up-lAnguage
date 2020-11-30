@@ -19,6 +19,8 @@ import mua.operation.isword;
 import mua.operation.islist;
 import mua.operation.isbool;
 import mua.operation.isempty;
+import mua.operation._return;
+import mua.operation.export;
 
 /**
  * The abstract class of predefined operations of MUA.
@@ -142,10 +144,10 @@ public abstract class Operation {
         // named the same as an function or operation
         Function fun = Namespace.getFunction(opname);
         if (fun != null)
-            return parseName(new Arguments(fun.execute(args).toString()));
+            return parseName(new Arguments(fun.execute(args).toRawString()));
         Operation op = Operation.build(opname);
         if (op != null)
-            return parseName(new Arguments(op.execute(args).toString()));
+            return parseName(new Arguments(op.execute(args).toRawString()));
         return Name.build(Word.build(opname));
     }
 

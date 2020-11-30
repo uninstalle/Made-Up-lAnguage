@@ -2,6 +2,11 @@ package mua.operation;
 
 import mua.value.*;
 
+/**
+ * isempty [Word/List]
+ * <p>
+ * Return if the Word/List is empty
+ */
 class isempty extends Operation {
     @Override
     Value execute(Arguments args) {
@@ -14,6 +19,6 @@ class isempty extends Operation {
         else if (value.isList())
             return Bool.build(((List) value).isEmpty());
         else
-            return null;
+            throw new IllegalArgumentException("Operation isempty expects Word or List as its argument");
     }
 }

@@ -1,7 +1,8 @@
 package mua.value;
 
 /**
- * This class contains a word object. It stores the word mark " too, but discards it when converting to string.
+ * This class contains a word object. It stores the word mark " too, but
+ * discards it when converting to string.
  */
 public class Word extends Value {
     // including type Word's mark "
@@ -13,6 +14,7 @@ public class Word extends Value {
 
     /**
      * Try to convert the {@code Word} to {@code Number}
+     * 
      * @return {@code Number} object built from the Word
      * @throws ClassCastException the value contains no valid number
      */
@@ -25,6 +27,7 @@ public class Word extends Value {
 
     /**
      * Try to convert the {@code Word} to {@code Bool}
+     * 
      * @return {@code Bool} object built from the Word
      * @throws ClassCastException the value contains no valid bool
      */
@@ -34,9 +37,10 @@ public class Word extends Value {
         else
             throw new ClassCastException("Cannot convert word to bool");
     }
-    
+
     /**
      * Build a {@code Word} object from given string
+     * 
      * @param value String that may contains a Word
      * @return {@code Word} object, or null if it contains no Word
      */

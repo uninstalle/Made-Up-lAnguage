@@ -2,6 +2,11 @@ package mua.operation;
 
 import mua.value.*;
 
+/**
+ * print [Value]
+ * <p>
+ * Print the value in the console
+ */
 class print extends Operation {
     @Override
     Value execute(Arguments args) {

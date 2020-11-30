@@ -1,9 +1,13 @@
 package mua.operation;
 
 import mua.value.*;
-import mua.Name;
 import mua.Namespace;
 
+/**
+ * isname [Word]
+ * <p>
+ * Return if a variable of the name given exists in current namespace
+ */
 class isname extends Operation {
     @Override
     Value execute(Arguments args) {
@@ -11,7 +15,7 @@ class isname extends Operation {
         if (v.isWord())
             return execute((Word) v);
         else
-            throw new RuntimeException("Type Word expected in isname");
+            throw new IllegalArgumentException("Operation isname expects Word as its argument");
     }
 
     Value execute(Word name) {

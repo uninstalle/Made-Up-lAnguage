@@ -3,6 +3,11 @@ package mua.operation;
 import mua.value.*;
 import mua.Main;
 
+/**
+ * read
+ * <p>
+ * Read a Number or Word from the stdin
+ */
 class read extends Operation {
     @Override
     Value execute(Arguments args) {

@@ -20,7 +20,7 @@ public class Name {
      * @return {@code Name} object, or null if the Word is not a valid name
      */
     public static Name build(Word name) {
-        if (name.toString().matches("^[A-Za-z]([A-Za-z0-9_])*"))
+        if (name.toString().matches("^[A-Za-z_]([A-Za-z0-9_])*"))
             return new Name(name.toString());
         else
             return null;
@@ -32,7 +32,7 @@ public class Name {
      * @return {@code Name} object, or null if the string is not a valid name
      */
     public static Name build(String name) {
-        if (name.matches("^[A-Za-z]([A-Za-z0-9_])*"))
+        if (name.matches("^[A-Za-z_]([A-Za-z0-9_])*"))
             return new Name(name);
         else
             return null;

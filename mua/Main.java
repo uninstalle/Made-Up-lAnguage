@@ -9,8 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         while (stdin.hasNextLine()) {
-            String cmd = stdin.nextLine();
-            cmd = replaceAllOperation(cmd);
+            String cmd = getNextCommand();
             try {
                 if (!cmd.equals(""))
                     Operation.parse(cmd);
@@ -21,9 +20,17 @@ public class Main {
         stdin.close();
     }
 
+    public static String getNextCommand() {
+        String cmd = stdin.nextLine();
+        cmd = replaceAllOperation(cmd);
+        return cmd;
+    }
+
     static String replaceAllOperation(String raw) {
 
         raw = raw.replace(":", "thing ");
+        raw = raw.replace("\t", " ");
+        raw = raw.replace("\n", " ");
         raw = replaceOperation(raw, "if", "_if");
         raw = replaceOperation(raw, "return", "_return");
 
@@ -31,9 +38,10 @@ public class Main {
     }
 
     static String replaceOperation(String raw, String op, String new_op) {
-        raw = raw.replaceAll("(?<=[\\s])" + op + "(?=[\\s])", new_op);
-        raw = raw.replaceAll("(?<=[\\s])" + op + "$", new_op);
-        raw = raw.replaceAll("^" + op + "(?=[\\s])", new_op);
+        raw = raw.replaceAll("(?<=[^A-Za-z0-9])" + op + "(?=[^A-Za-z0-9])", new_op);
+        raw = raw.replaceAll("(?<=[^A-Za-z0-9])" + op + "$", new_op);
+        raw = raw.replaceAll("^" + op + "(?=[^A-Za-z0-9])", new_op);
         return raw;
     }
+
 }

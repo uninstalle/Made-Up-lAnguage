@@ -4,10 +4,13 @@ import mua.Namespace;
 import mua.value.List;
 import mua.value.Value;
 
+/**
+ * The class of user-defined function of MUA.
+ */
 public class Function extends Operation {
 
     public static void main(String[] args) {
-        build(List.build("[[a] [print a]]")).execute(new Arguments("\"a123"));
+        build(List.build("[[] [print 1]]")).execute(new Arguments("\"a123"));
     }
 
     String[] parameters;
@@ -57,24 +60,25 @@ public class Function extends Operation {
             return false;
     }
 
-    String replaceParameters(Arguments args) {
-        String code = operations;
-        for (String para : parameters) {
-            String arg = Operation.parseValue(args).toRawString();
-            code = code.replaceAll("(?<=[\\s])" + para + "(?=[\\s])", arg);
-            code = code.replaceAll("(?<=[\\s])" + para + "$", arg);
-            code = code.replaceAll("^" + para + "(?=[\\s])", arg);
-        }
-        return code;
+    String prepareParametersAssignments(Arguments args) {
+        String assignment = "";
+        // test if no parameter
+        if (!(parameters.length == 1 && parameters[0].equals("")))
+            for (String para : parameters) {
+                String arg = Operation.parseValue(args).toRawString();
+                assignment += "make \"" + para + " " + arg + " ";
+            }
+        return assignment;
     }
 
     @Override
-    Value execute(Arguments args) throws RuntimeException {
-        String op = replaceParameters(args);
-
+    Value execute(Arguments args) {
+        Arguments assignment = new Arguments(prepareParametersAssignments(args));
         Namespace.addNestedNamespace();
+        while (!assignment.isEmpty())
+            Operation.parse(assignment);
 
-        Arguments commandString = new Arguments(op);
+        Arguments commandString = new Arguments(operations);
         Value retval = Value.build("[]");
         while (!commandString.isEmpty())
             retval = parse(commandString);

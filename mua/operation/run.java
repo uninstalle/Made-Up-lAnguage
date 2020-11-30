@@ -2,6 +2,12 @@ package mua.operation;
 
 import mua.value.*;
 
+/**
+ * run [List]
+ * <p>
+ * Run a code segment inside the List, and return the last value of the code
+ * segment.
+ */
 class run extends Operation {
     @Override
     Value execute(Arguments args) {
@@ -9,7 +15,7 @@ class run extends Operation {
         if (v.isList())
             return execute((List) v);
         else
-            throw new RuntimeException("Type List expected in run");
+            throw new IllegalArgumentException("Operation run expects List as its argument");
 
     }
 
