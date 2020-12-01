@@ -7,7 +7,7 @@ import mua.operation.*;
 
 /**
  * This class accepts a string of infix expression.
- * 
+ *
  * <p>
  * To get the value of the infix expression, use {@code getValue} method.
  */
@@ -15,8 +15,9 @@ public class Infix {
     String value;
 
     public static void main(String[] args) {
-        Infix exp = Infix.build("(add (5%3-3*3/(5+4)) 5)");
-        System.out.println(exp.getValue().toString());
+        Infix exp = Infix.build("()");
+        if (exp != null)
+            System.out.println(exp.getValue().toString());
     }
 
     public Infix(String value) {
@@ -27,6 +28,12 @@ public class Infix {
         return value.startsWith("(") && value.endsWith(")");
     }
 
+    /**
+     * Try to build a infix expression class from given string. Given string should contains infix exp mark ().
+     *
+     * @param value infix exp string
+     * @return infix expression object
+     */
     public static Infix build(String value) {
         value = value.trim();
         if (Infix.isInfix(value))
@@ -94,7 +101,7 @@ public class Infix {
             } else {
                 // next arg is an operand(or a operation, execute it to get return value then)
                 Value retVal = Operation.parse(args);
-                s2.push(((mua.value.Number) retVal).toString());
+                s2.push(retVal.toString());
             }
         }
         while (!s1.empty()) {
@@ -133,7 +140,12 @@ public class Infix {
                 s1.push(element);
             }
         }
-        return Value.build(s1.pop());
+        if (s1.empty())
+            return Value.build("0");
+        Value v = Value.build(s1.pop());
+        if (v == null)
+            throw new IllegalStateException("Unexpected result in infix expression");
+        return v;
     }
 
     public boolean isEmpty() {

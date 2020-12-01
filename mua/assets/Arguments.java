@@ -17,10 +17,6 @@ import mua.Main;
 public class Arguments {
     String args;
 
-    Arguments() {
-        args = "";
-    }
-
     public Arguments(String str) {
         args = str.trim();
     }
@@ -85,35 +81,35 @@ public class Arguments {
      * @return String contains the next token
      */
     public String nextToken() {
-        StringBuilder opname = new StringBuilder(nextSubStr());
+        StringBuilder op_name = new StringBuilder(nextSubStr());
 
         // The token is a list, creating list
-        if (opname.toString().startsWith("[")) {
+        if (op_name.toString().startsWith("[")) {
             int level = 0;
-            level += opname.length() - opname.toString().replace("[", "").length();
-            level -= opname.length() - opname.toString().replace("]", "").length();
+            level += op_name.length() - op_name.toString().replace("[", "").length();
+            level -= op_name.length() - op_name.toString().replace("]", "").length();
 
             while (level != 0) {
                 String nextArg = " " + nextSubStr();
-                opname.append(nextArg);
+                op_name.append(nextArg);
                 level += nextArg.length() - nextArg.replace("[", "").length();
                 level -= nextArg.length() - nextArg.replace("]", "").length();
             }
         }
         // Token is an infix exp, creating infix exp
-        else if (opname.toString().startsWith("(")) {
+        else if (op_name.toString().startsWith("(")) {
             int level = 0;
-            level += opname.length() - opname.toString().replace("(", "").length();
-            level -= opname.length() - opname.toString().replace(")", "").length();
+            level += op_name.length() - op_name.toString().replace("(", "").length();
+            level -= op_name.length() - op_name.toString().replace(")", "").length();
 
             while (level != 0) {
                 String nextArg = " " + nextSubStr();
-                opname.append(nextArg);
+                op_name.append(nextArg);
                 level += nextArg.length() - nextArg.replace("(", "").length();
                 level -= nextArg.length() - nextArg.replace(")", "").length();
             }
         }
 
-        return opname.toString();
+        return op_name.toString();
     }
 }

@@ -64,20 +64,8 @@ public class Namespace {
         global._assignFunction(name, fun);
     }
 
-    Value _get(Name name) {
-        return nameList.get(name.toString());
-    }
-
     public static Value get(Name name) {
-        Namespace ns = curSpace;
-        Value v = ns._get(name);
-        while (v == null) {
-            if (ns.upper == null)
-                break;
-            ns = ns.upper;
-            v = ns._get(name);
-        }
-        return v;
+       return get(name.toString());
     }
 
     Value _get(String name) {

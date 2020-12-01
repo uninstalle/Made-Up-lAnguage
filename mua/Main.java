@@ -3,18 +3,21 @@ package mua;
 import java.util.Scanner;
 
 import mua.operation.*;
+import mua.assets.Namespace;
 
 public class Main {
     public static final Scanner stdin = new Scanner(System.in);
 
     public static void main(String[] args) {
+
+        Namespace.initializeGlobalSpace();
+
         while (stdin.hasNextLine()) {
             String cmd = getNextCommand();
 
-            if (!cmd.equals(""))
-                Operation.parse(cmd);
             try {
-                ;
+                if (!cmd.equals(""))
+                    Operation.parse(cmd);
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
             }

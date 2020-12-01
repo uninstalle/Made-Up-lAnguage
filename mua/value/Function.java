@@ -7,7 +7,7 @@ import mua.operation.Operation;
 /**
  * The class of user-defined function of MUA.
  */
-public class Function implements Operation,Value {
+public class Function extends List implements Operation {
 
     public static void main(String[] args) {
         build(List.build("[[] [print 1]]")).execute(new Arguments("\"a123"));
@@ -34,6 +34,7 @@ public class Function implements Operation,Value {
         Function function = new Function();
         function.parameters = para.toString().substring(1, para.toString().length() - 1).split(" ");
         function.operations = op.toString().substring(1, op.toString().length() - 1);
+        function.value = functionList.toString();
         return function;
     }
 
@@ -54,10 +55,7 @@ public class Function implements Operation,Value {
         String functionString = functionList.toString().substring(1, functionList.toString().length() - 1);
         Arguments functionCode = new Arguments(functionString);
         // with two and only two list objects as its element
-        if (List.isList(functionCode.nextToken()) && List.isList(functionCode.nextToken()) && functionCode.isEmpty())
-            return true;
-        else
-            return false;
+        return List.isList(functionCode.nextToken()) && List.isList(functionCode.nextToken()) && functionCode.isEmpty();
     }
 
     String prepareParametersAssignments(Arguments args) {
@@ -90,9 +88,6 @@ public class Function implements Operation,Value {
 
     @Override
     public String toRawString() {
-        StringBuilder p = new StringBuilder();
-        for(String para : parameters)
-            p.append(para).append(" ");
-        return p + operations;
+        return value;
     }
 }

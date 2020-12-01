@@ -6,7 +6,22 @@ import mua.assets.Arguments;
 import mua.value.*;
 
 // force to compile all operation class
-
+import mua.operation.make;
+import mua.operation.thing;
+import mua.operation.print;
+import mua.operation.read;
+import mua.operation.Operator;
+import mua.operation.erase;
+import mua.operation.isname;
+import mua.operation.run;
+import mua.operation._if;
+import mua.operation.isnumber;
+import mua.operation.isword;
+import mua.operation.islist;
+import mua.operation.isbool;
+import mua.operation.isempty;
+import mua.operation._return;
+import mua.operation.export;
 
 /**
  * The interface of predefined operations of MUA.
@@ -72,7 +87,7 @@ public interface Operation {
      * @param str The complete command string
      * @return The return value of the command string, or null if it is not valid
      */
-    public static Value parse(String str) {
+    static Value parse(String str) {
         return parseValue(new Arguments(str));
     }
 
@@ -81,7 +96,7 @@ public interface Operation {
      * @param args The Arguments object containing command string
      * @return The return value of the command string, or null if it is not valid
      */
-    public static Value parse(Arguments args) {
+    static Value parse(Arguments args) {
         return parseValue(args);
     }
 
@@ -97,18 +112,21 @@ public interface Operation {
      * @param args The Arguments object containing command string
      * @return The parsed value, or null if it is not a valid value
      */
-    public static Value parseValue(Arguments args) {
-        String opname = args.nextToken();
+    static Value parseValue(Arguments args) {
+        String op_name = args.nextToken();
 
         // Test if it is a function
-        Function fun = Namespace.getFunction(opname);
+        Function fun = Namespace.getFunction(op_name);
         if (fun != null)
             return fun.execute(args);
         // Test if it is an operation
-        Operation op = Operation.build(opname);
+        Operation op = Operation.build(op_name);
         if (op != null)
             return op.execute(args);
-        return Value.build(opname);
+        Value v = Value.build(op_name);
+        if (v == null)
+            throw new IllegalArgumentException(op_name + " is not a valid Value");
+        return v;
     }
 
     /**
@@ -124,17 +142,23 @@ public interface Operation {
      * @return The parsed name, or null if it is not a valid name
      */
     static Name parseName(Arguments args) {
-        String opname = args.nextToken();
+        String op_name = args.nextToken();
 
         // Try to build a function or operation first in case that building a variable
         // named the same as an function or operation
-        Function fun = Namespace.getFunction(opname);
+        Function fun = Namespace.getFunction(op_name);
         if (fun != null)
             return parseName(new Arguments(fun.execute(args).toRawString()));
-        Operation op = Operation.build(opname);
+        Operation op = Operation.build(op_name);
         if (op != null)
             return parseName(new Arguments(op.execute(args).toRawString()));
-        return Name.build(Word.build(opname));
+        Word word = Word.build(op_name);
+        if (word == null)
+            throw new IllegalArgumentException(op_name + " is not a valid Word");
+        Name name = Name.build(word);
+        if (name == null)
+            throw new IllegalArgumentException(op_name + " is not a valid Name");
+        return name;
     }
 
     /**
@@ -145,15 +169,18 @@ public interface Operation {
      * @return The parsed name, or null if it is not a valid name
      */
     static Name parseNameLabel(Arguments args) {
-        String opname = args.nextToken();
+        String op_name = args.nextToken();
 
-        Function fun = Namespace.getFunction(opname);
+        Function fun = Namespace.getFunction(op_name);
         if (fun != null)
             return parseNameLabel(new Arguments(fun.execute(args).toString()));
-        Operation op = Operation.build(opname);
+        Operation op = Operation.build(op_name);
         if (op != null)
             return parseNameLabel(new Arguments(op.execute(args).toString()));
-        return Name.build(opname);
+        Name name = Name.build(op_name);
+        if (name == null)
+            throw new IllegalArgumentException(op_name + " is not a valid Word");
+        return name;
     }
 
 }

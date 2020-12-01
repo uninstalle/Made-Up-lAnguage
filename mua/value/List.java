@@ -6,6 +6,10 @@ package mua.value;
 public class List implements Value {
     String value;
 
+    List() {
+        this.value = "";
+    }
+
     List(String value) {
         this.value = value;
     }
@@ -13,7 +17,7 @@ public class List implements Value {
     /**
      * Test if the string has a valid {@code List}. It should starts with '[', ends
      * with ']' and has the same number of '[' and ']'.
-     * 
+     *
      * @param value String that may contain a list
      * @return Whether the string contains a list
      */
@@ -22,15 +26,15 @@ public class List implements Value {
             return false;
 
         int level = 0;
-        level += value.length() - value.toString().replace("[", "").length();
-        level -= value.length() - value.toString().replace("]", "").length();
+        level += value.length() - value.replace("[", "").length();
+        level -= value.length() - value.replace("]", "").length();
 
         return level == 0;
     }
 
     /**
      * Build a {@code List} from given string.
-     * 
+     *
      * @return {@code List} object, or null if it has no list object
      */
     public static List build(String value) {

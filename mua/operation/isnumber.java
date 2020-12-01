@@ -15,6 +15,6 @@ class isnumber implements Operation {
     }
 
     Value execute(Value value) {
-        return Bool.build(value.isNumber() || value.isWord() && mua.value.Number.isNumber(((Word) value).toString()));
+        return Bool.build(value.isNumber() || value.isWord() && mua.value.Number.isNumber(value.toString()));
     }
 }
