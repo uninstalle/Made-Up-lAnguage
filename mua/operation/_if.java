@@ -15,7 +15,7 @@ public class _if implements Operation {
         Value v2 = Operation.parseValue(args);
         Value v3 = Operation.parseValue(args);
         if (v1.isBool() && v2.isList() && v3.isList())
-            return execute((Bool) v1, (List) v2, (List) v3);
+            return execute(v1.toBool(), v2.toList(), v3.toList());
         else
             throw new IllegalStateException("Illegal if operation");
     }

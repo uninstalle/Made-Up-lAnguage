@@ -48,10 +48,10 @@ public class Infix {
      * of operators/operands.
      */
     void tokenize() {
-        value = value.replaceAll("(?=[\\(\\)])", " ");
-        value = value.replaceAll("(?<=[\\(\\)])", " ");
-        value = value.replaceAll("(?<=([0-9A-Za-z]{1,50}|\\))\\s{0,50}[\\+\\-\\*/%])", " ");
-        value = value.replaceAll("(?<=([0-9A-Za-z]{1,50}|\\))\\s{0,50})(?=[\\+\\-\\*/%])", " ");
+        value = value.replaceAll("(?=[()])", " ");
+        value = value.replaceAll("(?<=[()])", " ");
+        value = value.replaceAll("(?<=([0-9A-Za-z]{1,50}|\\))\\s{0,50}[+\\-*/%])", " ");
+        value = value.replaceAll("(?<=([0-9A-Za-z]{1,50}|\\))\\s{0,50})(?=[+\\-*/%])", " ");
         value = value.replaceAll("[\\s]+", " ");
     }
 
@@ -70,7 +70,7 @@ public class Infix {
 
         while (!args.isEmpty()) {
             String arg = args.peekNextSubStr();
-            if (arg.matches("[\\+\\-\\*/%\\(\\)]")) {
+            if (arg.matches("[+\\-*/%()]")) {
                 // next arg is an operator
                 String op = args.nextSubStr();
                 while (true) {
@@ -87,7 +87,7 @@ public class Infix {
                         // first in stack or after left(, just push it
                         s1.push(op);
                         break;
-                    } else if ((s1.peek().matches("[\\+\\-]")) && op.matches("[\\*/%]")) {
+                    } else if ((s1.peek().matches("[+\\-]")) && op.matches("[*/%]")) {
                         // current operator has higher priority
                         s1.push(op);
                         break;
@@ -113,7 +113,7 @@ public class Infix {
         s1.clear();
 
         for (String element : s2) {
-            if (element.matches("[\\+\\-\\*/%]")) {
+            if (element.matches("[+\\-*/%]")) {
                 double val1 = Double.parseDouble(s1.pop());
                 double val2 = Double.parseDouble(s1.pop());
                 switch (element) {
@@ -136,7 +136,7 @@ public class Infix {
                         break;
                 }
                 s1.push(String.valueOf(val2));
-            } else if (element.matches("[\\(\\)]")) {
+            } else if (element.matches("[()]")) {
                 // should not be any () exists
             } else {
                 s1.push(element);

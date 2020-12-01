@@ -14,33 +14,35 @@ public class Word implements Value {
 
     /**
      * Try to convert the {@code Word} to {@code Number}
-     * 
+     *
      * @return {@code Number} object built from the Word
      * @throws ClassCastException the value contains no valid number
      */
+    @Override
     public Number toNumber() {
-        if (Number.isNumber(value.substring(1)))
+        if (isNumber())
             return new Number(value.substring(1));
         else
-            throw new ClassCastException("Cannot convert word to number");
+            throw new ClassCastException("Cannot convert Word to Number");
     }
 
     /**
      * Try to convert the {@code Word} to {@code Bool}
-     * 
+     *
      * @return {@code Bool} object built from the Word
      * @throws ClassCastException the value contains no valid bool
      */
+    @Override
     public Bool toBool() {
-        if (Bool.isBool(value.substring(1)))
+        if (isBool())
             return new Bool(value.substring(1));
         else
-            throw new ClassCastException("Cannot convert word to bool");
+            throw new ClassCastException("Cannot convert Word to Bool");
     }
 
     /**
      * Build a {@code Word} object from given string
-     * 
+     *
      * @param value String that may contains a Word
      * @return {@code Word} object, or null if it contains no Word
      */
@@ -54,6 +56,16 @@ public class Word implements Value {
 
     public static boolean isWord(String value) {
         return value.startsWith("\"");
+    }
+
+    @Override
+    public boolean isNumber() {
+        return Number.isNumber(value.substring(1));
+    }
+
+    @Override
+    public boolean isBool() {
+        return Bool.isBool(value.substring(1));
     }
 
     public boolean isEmpty() {

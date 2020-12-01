@@ -16,9 +16,9 @@ class isempty implements Operation {
 
     Value execute(Value value) {
         if (value.isWord())
-            return Bool.build(((Word) value).isEmpty());
+            return Bool.build(value.toWord().isEmpty());
         else if (value.isList())
-            return Bool.build(((List) value).isEmpty());
+            return Bool.build(value.toList().isEmpty());
         else
             throw new IllegalArgumentException("Operation isempty expects Word or List as its argument");
     }

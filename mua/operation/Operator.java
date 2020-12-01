@@ -10,11 +10,11 @@ import mua.value.Number;
  */
 interface Operator extends Operation {
     @Override
-    default public Value execute(Arguments args) {
+    default Value execute(Arguments args) {
         return execute(Operation.parseValue(args), Operation.parseValue(args));
     }
 
-    abstract Value execute(Value a, Value b);
+    Value execute(Value a, Value b);
 }
 
 /**
@@ -24,11 +24,7 @@ class add implements Operator {
 
     @Override
     public Value execute(Value a, Value b) {
-        if (a.isWord())
-            a = ((Word) a).toNumber();
-        if (b.isWord())
-            b = ((Word) b).toNumber();
-        return execute((Number) a, (Number) b);
+        return execute(a.toNumber(), b.toNumber());
     }
 
     Value execute(Number a, Number b) {
@@ -37,17 +33,13 @@ class add implements Operator {
 }
 
 /**
- * substract [Value] [Value]
+ * subtract [Value] [Value]
  */
 class sub implements Operator {
 
     @Override
     public Value execute(Value a, Value b) {
-        if (a.isWord())
-            a = ((Word) a).toNumber();
-        if (b.isWord())
-            b = ((Word) b).toNumber();
-        return execute((Number) a, (Number) b);
+        return execute(a.toNumber(), b.toNumber());
     }
 
     Value execute(Number a, Number b) {
@@ -62,11 +54,7 @@ class mul implements Operator {
 
     @Override
     public Value execute(Value a, Value b) {
-        if (a.isWord())
-            a = ((Word) a).toNumber();
-        if (b.isWord())
-            b = ((Word) b).toNumber();
-        return execute((Number) a, (Number) b);
+        return execute(a.toNumber(), b.toNumber());
     }
 
     Value execute(Number a, Number b) {
@@ -81,11 +69,7 @@ class div implements Operator {
 
     @Override
     public Value execute(Value a, Value b) {
-        if (a.isWord())
-            a = ((Word) a).toNumber();
-        if (b.isWord())
-            b = ((Word) b).toNumber();
-        return execute((Number) a, (Number) b);
+        return execute(a.toNumber(), b.toNumber());
     }
 
     Value execute(Number a, Number b) {
@@ -100,11 +84,7 @@ class mod implements Operator {
 
     @Override
     public Value execute(Value a, Value b) {
-        if (a.isWord())
-            a = ((Word) a).toNumber();
-        if (b.isWord())
-            b = ((Word) b).toNumber();
-        return execute((Number) a, (Number) b);
+        return execute(a.toNumber(), b.toNumber());
     }
 
     Value execute(Number a, Number b) {
@@ -120,14 +100,9 @@ class eq implements Operator {
     @Override
     public Value execute(Value a, Value b) {
         if (a.isWord() && b.isWord())
-            return execute((Word) a, (Word) b);
-        else {
-            if (a.isWord())
-                a = ((Word) a).toNumber();
-            if (b.isWord())
-                b = ((Word) b).toNumber();
-            return execute((Number) a, (Number) b);
-        }
+            return execute(a.toWord(), b.toWord());
+        else
+            return execute(a.toNumber(), b.toNumber());
     }
 
     Value execute(Number a, Number b) {
@@ -147,14 +122,9 @@ class gt implements Operator {
     @Override
     public Value execute(Value a, Value b) {
         if (a.isWord() && b.isWord())
-            return execute((Word) a, (Word) b);
-        else {
-            if (a.isWord())
-                a = ((Word) a).toNumber();
-            if (b.isWord())
-                b = ((Word) b).toNumber();
-            return execute((Number) a, (Number) b);
-        }
+            return execute(a.toWord(), b.toWord());
+        else
+            return execute(a.toNumber(), b.toNumber());
     }
 
     Value execute(Number a, Number b) {
@@ -174,14 +144,9 @@ class lt implements Operator {
     @Override
     public Value execute(Value a, Value b) {
         if (a.isWord() && b.isWord())
-            return execute((Word) a, (Word) b);
-        else {
-            if (a.isWord())
-                a = ((Word) a).toNumber();
-            if (b.isWord())
-                b = ((Word) b).toNumber();
-            return execute((Number) a, (Number) b);
-        }
+            return execute(a.toWord(), b.toWord());
+        else
+            return execute(a.toNumber(), b.toNumber());
     }
 
     Value execute(Number a, Number b) {
@@ -200,7 +165,7 @@ class and implements Operator {
 
     @Override
     public Value execute(Value a, Value b) {
-        return execute((Bool) a, (Bool) b);
+        return execute(a.toBool(), b.toBool());
     }
 
     Value execute(Bool a, Bool b) {
@@ -215,7 +180,7 @@ class or implements Operator {
 
     @Override
     public Value execute(Value a, Value b) {
-        return execute((Bool) a, (Bool) b);
+        return execute(a.toBool(), b.toBool());
     }
 
     Value execute(Bool a, Bool b) {
@@ -235,7 +200,7 @@ class not implements Operator {
     @Override
     public Value execute(Value a, Value b) {
         // b is a dummy argument
-        return execute((Bool) a);
+        return execute(a.toBool());
     }
 
     Value execute(Bool a) {

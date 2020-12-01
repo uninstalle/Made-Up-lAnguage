@@ -14,7 +14,7 @@ class run implements Operation {
     public Value execute(Arguments args) {
         Value v = Operation.parseValue(args);
         if (v.isList())
-            return execute((List) v);
+            return execute(v.toList());
         else
             throw new IllegalArgumentException("Operation run expects List as its argument");
 
@@ -23,9 +23,9 @@ class run implements Operation {
     Value execute(List list) {
         String op = list.toString().substring(1, list.toString().length() - 1);
         Arguments args = new Arguments(op);
-        Value retval = Value.build("[]");
+        Value retVal = Value.build("[]");
         while (!args.isEmpty())
-            retval = Operation.parse(args);
-        return retval;
+            retVal = Operation.parse(args);
+        return retVal;
     }
 }

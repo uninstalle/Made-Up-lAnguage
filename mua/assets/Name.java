@@ -16,6 +16,7 @@ public class Name {
 
     /**
      * build a {@code Name} from given {@code Word}.
+     *
      * @param name name Word
      * @return {@code Name} object, or null if the Word is not a valid name
      */
@@ -28,6 +29,7 @@ public class Name {
 
     /**
      * Build a {@code Name} from given string. The string is not a raw string of a word, which means it contains no "
+     *
      * @param name name string
      * @return {@code Name} object, or null if the string is not a valid name
      */

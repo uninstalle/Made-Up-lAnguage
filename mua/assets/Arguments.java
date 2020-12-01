@@ -44,7 +44,7 @@ public class Arguments {
      * If the string contains only one substring(which is itself), then return the
      * string and set the original string as "".
      * </p>
-     * 
+     *
      * @return Substring
      */
     public String nextSubStr() {
@@ -67,8 +67,8 @@ public class Arguments {
     /**
      * Get the next substring but will not change the original string
      *
-     * @see #nextSubStr().
      * @return Substring
+     * @see #nextSubStr().
      */
     public String peekNextSubStr() {
         String backup = args;
@@ -79,7 +79,7 @@ public class Arguments {
 
     /**
      * Insert a string in the front of the Argument string
-     * 
+     *
      * @param str string for inserting
      */
     public void insertStr(String str) {
@@ -103,7 +103,7 @@ public class Arguments {
         // The token is a list, creating list
         if (str.startsWith("["))
             op_name = parseList(str);
-        // Token is an infix exp, creating infix exp
+            // Token is an infix exp, creating infix exp
         else if (str.startsWith("("))
             op_name = parseInfix(str);
         else
@@ -133,7 +133,7 @@ public class Arguments {
                 }
             }
             if (!op_name.toString().equals(""))
-                op_name.append(" " + str);
+                op_name.append(" ").append(str);
             else
                 op_name.append(str);
             if (brk)
@@ -165,7 +165,7 @@ public class Arguments {
                 }
             }
             if (!op_name.toString().equals(""))
-                op_name.append(" " + str);
+                op_name.append(" ").append(str);
             else
                 op_name.append(str);
             if (brk)

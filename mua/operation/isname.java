@@ -14,7 +14,7 @@ class isname implements Operation {
     public Value execute(Arguments args) {
         Value v = Operation.parseValue(args);
         if (v.isWord())
-            return execute((Word) v);
+            return execute(v.toWord());
         else
             throw new IllegalArgumentException("Operation isname expects Word as its argument");
     }

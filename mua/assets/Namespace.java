@@ -31,14 +31,6 @@ public class Namespace {
             throw new IllegalStateException("Trying to delete global namespace");
     }
 
-    public static Namespace getCurrentNamespace() {
-        return curSpace;
-    }
-
-    public static Namespace getGlobalNamespace() {
-        return global;
-    }
-
     Namespace upper;
     HashMap<String, Value> nameList = new HashMap<>();
 
@@ -74,6 +66,12 @@ public class Namespace {
         return get(name.toString());
     }
 
+    /**
+     * Get the value of the variable with the given name. If current namespace doesn't contain the variable, this function will look up to upper namespace
+     *
+     * @param name variable name
+     * @return value of the variable, or null if the variable doesn't exist
+     */
     public static Value get(String name) {
         Namespace ns = curSpace;
         Value v = ns._get(name);
@@ -86,6 +84,12 @@ public class Namespace {
         return v;
     }
 
+    /**
+     * Get function with the given name. If there exists a variable with the same name in nearer namespace, this function will stop look up and return null
+     *
+     * @param name function name
+     * @return function, or null if no function retrieved
+     */
     public static Function getFunction(String name) {
         Namespace ns = curSpace;
         Value v = ns._get(name);
@@ -97,7 +101,7 @@ public class Namespace {
         }
         if (v == null || !v.isFunction())
             return null;
-        return (Function)v;
+        return v.toFunction();
     }
 
     public Value _erase(Name name) {

@@ -18,18 +18,18 @@ public class Function extends List implements Operation {
 
     /**
      * Build a {@code Function} object from the given list.
-     * 
+     *
      * <p>
      * This function will not check if the list is a valid function
-     * 
+     *
      * @param functionList A list that contains a function
      * @return The {@code Function} object built
      */
     public static Function build(List functionList) {
         String functionString = functionList.toString().substring(1, functionList.toString().length() - 1);
         Arguments functionCode = new Arguments(functionString);
-        List para = (List) Operation.parseValue(functionCode);
-        List op = (List) Operation.parseValue(functionCode);
+        List para = Operation.parseValue(functionCode).toList();
+        List op = Operation.parseValue(functionCode).toList();
 
         Function function = new Function();
         function.parameters = para.toString().substring(1, para.toString().length() - 1).split(" ");
@@ -41,11 +41,11 @@ public class Function extends List implements Operation {
     /**
      * Test if the {@code Value} contains a valid function, which is a list that
      * contains two list elements.
-     * 
+     *
      * <p>
      * This function will not check if the two list elements have valid parameter
      * declaration and code.
-     * 
+     *
      * @param functionList A list that may contain a function
      * @return Whether the list is a function
      */
@@ -77,7 +77,7 @@ public class Function extends List implements Operation {
             Operation.parse(assignment);
 
         Arguments commandString = new Arguments(operations);
-        Value retVal = Value.build("[]");
+        Value retVal = null;
         while (!commandString.isEmpty())
             retVal = Operation.parse(commandString);
 

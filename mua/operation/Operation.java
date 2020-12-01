@@ -31,7 +31,7 @@ import mua.operation.export;
  * build objects. All {@code Operation} class is built by it. To execute the
  * operation, invoke the {@code execute} function of the {@code Operation} class
  * with {@code Arguments} as parameters.
- * 
+ *
  * @see #execute(Arguments)
  */
 public interface Operation {
@@ -42,7 +42,7 @@ public interface Operation {
      * <p>
      * This function accepts a {@code Arguments} and try to parse it and execute it
      * to get a return value.
-     * 
+     *
      * @param args The Arguments object containing command string
      * @return The return value of the command string
      * @throws RuntimeException When the operation causes an exception
@@ -56,7 +56,7 @@ public interface Operation {
      * This function will try to build predefined operation according to the op name
      * string. It doesn't contain the customized functions.
      * </p>
-     * 
+     *
      * @param op_name The string of the operation name
      * @return the very operation object, or null if the operation doesn't exist
      */
@@ -73,7 +73,7 @@ public interface Operation {
 
     /**
      * Test if there exists an operation with the name given
-     * 
+     *
      * @param op_name The name of operation
      * @return If the operation exists
      */
@@ -92,9 +92,9 @@ public interface Operation {
     }
 
     /**
-     * @see #parse(String)
      * @param args The Arguments object containing command string
      * @return The return value of the command string, or null if it is not valid
+     * @see #parse(String)
      */
     static Value parse(Arguments args) {
         return parseValue(args);
@@ -108,7 +108,7 @@ public interface Operation {
      * and try to parse it as an operation first. If it is not, then take it as a
      * value.
      * </p>
-     * 
+     *
      * @param args The Arguments object containing command string
      * @return The parsed value, or null if it is not a valid value
      */
@@ -137,7 +137,7 @@ public interface Operation {
      * and try to parse it as a function or operation first. If it is not, then take
      * it as a name. Name should be a Word.
      * </p>
-     * 
+     *
      * @param args The Arguments object containing command string
      * @return The parsed name, or null if it is not a valid name
      */
@@ -164,7 +164,7 @@ public interface Operation {
     /**
      * This is a special form of parseName for Operation {@code thing}. {@code Name}
      * in {@code thing} operation has no " mark.
-     * 
+     *
      * @param args The Arguments object containing command string
      * @return The parsed name, or null if it is not a valid name
      */

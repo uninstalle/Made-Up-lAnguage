@@ -20,6 +20,7 @@ public class Main {
                     Operation.parse(cmd);
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
+                // reset namespace in case that exception is thrown from a called user function
                 Namespace.setCurrentNamespaceGlobal();
             }
         }

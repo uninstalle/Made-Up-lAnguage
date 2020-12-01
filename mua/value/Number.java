@@ -24,6 +24,7 @@ public class Number implements Value {
 
     /**
      * Build a {@code Number} from given string.
+     *
      * @param value String that may contain a {@code Number}
      * @return {@code Number} object, or null if it has no valid {@code Number}
      */
