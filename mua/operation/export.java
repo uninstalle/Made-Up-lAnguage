@@ -24,8 +24,7 @@ public class export implements Operation {
         Value v = Namespace.get(name);
         if (f != null) {
             Namespace.assignGlobalFunction(name.toString(), f);
-            // TODO: Function is a type of Value?
-            return null;
+            return f;
         } else if (v != null) {
             Namespace.assignGlobal(name, v);
             return v;
