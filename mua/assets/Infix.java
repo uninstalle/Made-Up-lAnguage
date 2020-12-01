@@ -1,9 +1,8 @@
-package mua;
+package mua.assets;
 
 import java.util.Stack;
 
 import mua.value.*;
-import mua.operation.Arguments;
 import mua.operation.*;
 
 /**

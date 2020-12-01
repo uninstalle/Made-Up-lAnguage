@@ -1,5 +1,6 @@
 package mua.operation;
 
+import mua.assets.Arguments;
 import mua.value.*;
 
 /**
@@ -7,10 +8,10 @@ import mua.value.*;
  * <p>
  * Print the value in the console
  */
-class print extends Operation {
+class print implements Operation {
     @Override
-    Value execute(Arguments args) {
-        return execute(parseValue(args));
+    public Value execute(Arguments args) {
+        return execute(Operation.parseValue(args));
     }
 
     Value execute(Value value) {

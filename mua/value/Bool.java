@@ -3,7 +3,7 @@ package mua.value;
 /**
  * This class contains a boolean value. It can be true or false.
  */
-public class Bool extends Value {
+public class Bool implements Value {
     Boolean value;
 
     Bool(String value) {

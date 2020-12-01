@@ -1,5 +1,6 @@
 package mua.operation;
 
+import mua.assets.Arguments;
 import mua.value.*;
 
 /**
@@ -7,10 +8,10 @@ import mua.value.*;
  * <p>
  * Return if the Word/List is empty
  */
-class isempty extends Operation {
+class isempty implements Operation {
     @Override
-    Value execute(Arguments args) {
-        return execute(parseValue(args));
+    public Value execute(Arguments args) {
+        return execute(Operation.parseValue(args));
     }
 
     Value execute(Value value) {

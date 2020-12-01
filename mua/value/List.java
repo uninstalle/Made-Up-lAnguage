@@ -3,7 +3,7 @@ package mua.value;
 /**
  * This class contains a list value. It stores the raw string of the list.
  */
-public class List extends Value {
+public class List implements Value {
     String value;
 
     List(String value) {

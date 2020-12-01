@@ -10,9 +10,11 @@ public class Main {
     public static void main(String[] args) {
         while (stdin.hasNextLine()) {
             String cmd = getNextCommand();
+
+            if (!cmd.equals(""))
+                Operation.parse(cmd);
             try {
-                if (!cmd.equals(""))
-                    Operation.parse(cmd);
+                ;
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
             }

@@ -1,5 +1,6 @@
 package mua.operation;
 
+import mua.assets.Arguments;
 import mua.value.*;
 import mua.Main;
 
@@ -8,9 +9,9 @@ import mua.Main;
  * <p>
  * Read a Number or Word from the stdin
  */
-class read extends Operation {
+class read implements Operation {
     @Override
-    Value execute(Arguments args) {
+    public Value execute(Arguments args) {
         return execute();
     }
 

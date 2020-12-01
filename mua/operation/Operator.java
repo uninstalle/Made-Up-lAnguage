@@ -1,16 +1,17 @@
 package mua.operation;
 
+import mua.assets.Arguments;
 import mua.value.*;
 import mua.value.Number;
 
 /**
- * The abstract class for all operators of MUA. Assuming that all operators are
+ * The interface for all operators of MUA. Assuming that all operators are
  * binary.
  */
-abstract class Operator extends Operation {
+interface Operator extends Operation {
     @Override
-    Value execute(Arguments args) {
-        return execute(parseValue(args), parseValue(args));
+    default public Value execute(Arguments args) {
+        return execute(Operation.parseValue(args), Operation.parseValue(args));
     }
 
     abstract Value execute(Value a, Value b);
@@ -19,10 +20,10 @@ abstract class Operator extends Operation {
 /**
  * add [Value] [Value]
  */
-class add extends Operator {
+class add implements Operator {
 
     @Override
-    Value execute(Value a, Value b) {
+    public Value execute(Value a, Value b) {
         if (a.isWord())
             a = ((Word) a).toNumber();
         if (b.isWord())
@@ -38,10 +39,10 @@ class add extends Operator {
 /**
  * substract [Value] [Value]
  */
-class sub extends Operator {
+class sub implements Operator {
 
     @Override
-    Value execute(Value a, Value b) {
+    public Value execute(Value a, Value b) {
         if (a.isWord())
             a = ((Word) a).toNumber();
         if (b.isWord())
@@ -57,10 +58,10 @@ class sub extends Operator {
 /**
  * multiply [Value] [Value]
  */
-class mul extends Operator {
+class mul implements Operator {
 
     @Override
-    Value execute(Value a, Value b) {
+    public Value execute(Value a, Value b) {
         if (a.isWord())
             a = ((Word) a).toNumber();
         if (b.isWord())
@@ -76,10 +77,10 @@ class mul extends Operator {
 /**
  * divide [Value] [Value]
  */
-class div extends Operator {
+class div implements Operator {
 
     @Override
-    Value execute(Value a, Value b) {
+    public Value execute(Value a, Value b) {
         if (a.isWord())
             a = ((Word) a).toNumber();
         if (b.isWord())
@@ -95,10 +96,10 @@ class div extends Operator {
 /**
  * mod [Value] [Value]
  */
-class mod extends Operator {
+class mod implements Operator {
 
     @Override
-    Value execute(Value a, Value b) {
+    public Value execute(Value a, Value b) {
         if (a.isWord())
             a = ((Word) a).toNumber();
         if (b.isWord())
@@ -114,10 +115,10 @@ class mod extends Operator {
 /**
  * equal [Value] [Value]
  */
-class eq extends Operator {
+class eq implements Operator {
 
     @Override
-    Value execute(Value a, Value b) {
+    public Value execute(Value a, Value b) {
         if (a.isWord() && b.isWord())
             return execute((Word) a, (Word) b);
         else {
@@ -141,10 +142,10 @@ class eq extends Operator {
 /**
  * greater [Value] [Value]
  */
-class gt extends Operator {
+class gt implements Operator {
 
     @Override
-    Value execute(Value a, Value b) {
+    public Value execute(Value a, Value b) {
         if (a.isWord() && b.isWord())
             return execute((Word) a, (Word) b);
         else {
@@ -168,10 +169,10 @@ class gt extends Operator {
 /**
  * less than [Value] [Value]
  */
-class lt extends Operator {
+class lt implements Operator {
 
     @Override
-    Value execute(Value a, Value b) {
+    public Value execute(Value a, Value b) {
         if (a.isWord() && b.isWord())
             return execute((Word) a, (Word) b);
         else {
@@ -195,10 +196,10 @@ class lt extends Operator {
 /**
  * and [Value] [Value]
  */
-class and extends Operator {
+class and implements Operator {
 
     @Override
-    Value execute(Value a, Value b) {
+    public Value execute(Value a, Value b) {
         return execute((Bool) a, (Bool) b);
     }
 
@@ -210,10 +211,10 @@ class and extends Operator {
 /**
  * or [Value] [Value]
  */
-class or extends Operator {
+class or implements Operator {
 
     @Override
-    Value execute(Value a, Value b) {
+    public Value execute(Value a, Value b) {
         return execute((Bool) a, (Bool) b);
     }
 
@@ -225,14 +226,14 @@ class or extends Operator {
 /**
  * not [Value]
  */
-class not extends Operator {
+class not implements Operator {
     @Override
-    Value execute(Arguments args) {
-        return execute(parseValue(args), null);
+    public Value execute(Arguments args) {
+        return execute(Operation.parseValue(args), null);
     }
 
     @Override
-    Value execute(Value a, Value b) {
+    public Value execute(Value a, Value b) {
         // b is a dummy argument
         return execute((Bool) a);
     }

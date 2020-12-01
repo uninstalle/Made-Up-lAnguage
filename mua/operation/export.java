@@ -1,7 +1,9 @@
 package mua.operation;
 
-import mua.Name;
-import mua.Namespace;
+import mua.assets.Name;
+import mua.assets.Namespace;
+import mua.assets.Arguments;
+import mua.value.Function;
 import mua.value.Value;
 
 /**
@@ -11,10 +13,10 @@ import mua.value.Value;
  * return the value, Export a function is supported, but cannot return the
  * function itself
  */
-public class export extends Operation {
+public class export implements Operation {
     @Override
-    Value execute(Arguments args) {
-        return execute(parseName(args));
+    public Value execute(Arguments args) {
+        return execute(Operation.parseName(args));
     }
 
     Value execute(Name name) {

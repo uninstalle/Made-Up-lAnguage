@@ -1,5 +1,6 @@
 package mua.operation;
 
+import mua.assets.Arguments;
 import mua.value.*;
 
 /**
@@ -7,12 +8,12 @@ import mua.value.*;
  * <p>
  * if [Bool] = true, execute [List1], else execute [List2]
  */
-public class _if extends Operation {
+public class _if implements Operation {
     @Override
-    Value execute(Arguments args) {
-        Value v1 = parseValue(args);
-        Value v2 = parseValue(args);
-        Value v3 = parseValue(args);
+    public Value execute(Arguments args) {
+        Value v1 = Operation.parseValue(args);
+        Value v2 = Operation.parseValue(args);
+        Value v3 = Operation.parseValue(args);
         if (v1.isBool() && v2.isList() && v3.isList())
             return execute((Bool) v1, (List) v2, (List) v3);
         else

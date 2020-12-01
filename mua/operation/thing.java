@@ -1,8 +1,9 @@
 package mua.operation;
 
+import mua.assets.Arguments;
 import mua.value.*;
-import mua.Name;
-import mua.Namespace;
+import mua.assets.Name;
+import mua.assets.Namespace;
 
 /**
  * thing [Name]
@@ -10,10 +11,10 @@ import mua.Namespace;
  * Return the value of the variable with given Name. Name should not contain
  * Word mark "
  */
-class thing extends Operation {
+class thing implements Operation {
     @Override
-    Value execute(Arguments args) {
-        return execute(parseNameLabel(args));
+    public Value execute(Arguments args) {
+        return execute(Operation.parseNameLabel(args));
     }
 
     Value execute(Name name) {

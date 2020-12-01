@@ -3,7 +3,7 @@ package mua.value;
 /**
  * This class contains a number value. It can be integer or float, but always convert to float in calculations.
  */
-public class Number extends Value {
+public class Number implements Value {
     String value;
 
     Number(String value) {

@@ -4,7 +4,7 @@ package mua.value;
  * This class contains a word object. It stores the word mark " too, but
  * discards it when converting to string.
  */
-public class Word extends Value {
+public class Word implements Value {
     // including type Word's mark "
     String value;
 

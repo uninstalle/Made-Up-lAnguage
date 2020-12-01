@@ -1,4 +1,4 @@
-package mua;
+package mua.assets;
 
 import mua.value.Word;
 

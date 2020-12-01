@@ -1,17 +1,18 @@
 package mua.operation;
 
+import mua.assets.Arguments;
 import mua.value.*;
-import mua.Namespace;
+import mua.assets.Namespace;
 
 /**
  * isname [Word]
  * <p>
  * Return if a variable of the name given exists in current namespace
  */
-class isname extends Operation {
+class isname implements Operation {
     @Override
-    Value execute(Arguments args) {
-        Value v = parseValue(args);
+    public Value execute(Arguments args) {
+        Value v = Operation.parseValue(args);
         if (v.isWord())
             return execute((Word) v);
         else

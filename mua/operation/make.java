@@ -1,8 +1,9 @@
 package mua.operation;
 
+import mua.assets.Arguments;
 import mua.value.*;
-import mua.Name;
-import mua.Namespace;
+import mua.assets.Name;
+import mua.assets.Namespace;
 
 /**
  * make [Name] [Value] or make [Name] [[List] [List]]
@@ -14,11 +15,11 @@ import mua.Namespace;
  * a raw string with a Word mark ". The first sub List is parameters, and the
  * second is function body.
  */
-class make extends Operation {
+class make implements Operation {
 
     @Override
-    Value execute(Arguments args) {
-        return execute(parseName(args), parseValue(args));
+    public Value execute(Arguments args) {
+        return execute(Operation.parseName(args), Operation.parseValue(args));
     }
 
     Value execute(Name name, Value value) {

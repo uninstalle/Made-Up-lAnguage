@@ -1,13 +1,13 @@
-package mua.operation;
+package mua.value;
 
-import mua.Namespace;
-import mua.value.List;
-import mua.value.Value;
+import mua.assets.Namespace;
+import mua.assets.Arguments;
+import mua.operation.Operation;
 
 /**
  * The class of user-defined function of MUA.
  */
-public class Function extends Operation {
+public class Function implements Operation,Value {
 
     public static void main(String[] args) {
         build(List.build("[[] [print 1]]")).execute(new Arguments("\"a123"));
@@ -61,31 +61,38 @@ public class Function extends Operation {
     }
 
     String prepareParametersAssignments(Arguments args) {
-        String assignment = "";
+        StringBuilder assignment = new StringBuilder();
         // test if no parameter
         if (!(parameters.length == 1 && parameters[0].equals("")))
             for (String para : parameters) {
                 String arg = Operation.parseValue(args).toRawString();
-                assignment += "make \"" + para + " " + arg + " ";
+                assignment.append("make \"").append(para).append(" ").append(arg).append(" ");
             }
-        return assignment;
+        return assignment.toString();
     }
 
     @Override
-    Value execute(Arguments args) {
+    public Value execute(Arguments args) {
         Arguments assignment = new Arguments(prepareParametersAssignments(args));
         Namespace.addNestedNamespace();
         while (!assignment.isEmpty())
             Operation.parse(assignment);
 
         Arguments commandString = new Arguments(operations);
-        Value retval = Value.build("[]");
+        Value retVal = Value.build("[]");
         while (!commandString.isEmpty())
-            retval = parse(commandString);
+            retVal = Operation.parse(commandString);
 
         Namespace.deleteNestedNamespace();
 
-        return retval;
+        return retVal;
     }
 
+    @Override
+    public String toRawString() {
+        StringBuilder p = new StringBuilder();
+        for(String para : parameters)
+            p.append(para).append(" ");
+        return p + operations;
+    }
 }

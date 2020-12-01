@@ -1,29 +1,15 @@
 package mua.operation;
 
-import mua.Name;
-import mua.Namespace;
+import mua.assets.Name;
+import mua.assets.Namespace;
+import mua.assets.Arguments;
 import mua.value.*;
 
 // force to compile all operation class
-import mua.operation.make;
-import mua.operation.thing;
-import mua.operation.print;
-import mua.operation.read;
-import mua.operation.Operator;
-import mua.operation.erase;
-import mua.operation.isname;
-import mua.operation.run;
-import mua.operation._if;
-import mua.operation.isnumber;
-import mua.operation.isword;
-import mua.operation.islist;
-import mua.operation.isbool;
-import mua.operation.isempty;
-import mua.operation._return;
-import mua.operation.export;
+
 
 /**
- * The abstract class of predefined operations of MUA.
+ * The interface of predefined operations of MUA.
  *
  * <p>
  * This class consists a set of static methods to parse the command string and
@@ -33,7 +19,7 @@ import mua.operation.export;
  * 
  * @see #execute(Arguments)
  */
-public abstract class Operation {
+public interface Operation {
 
     /**
      * The only abstract function of {@code Operation}.
@@ -46,7 +32,7 @@ public abstract class Operation {
      * @return The return value of the command string
      * @throws RuntimeException When the operation causes an exception
      */
-    abstract Value execute(Arguments args) throws RuntimeException;
+    Value execute(Arguments args) throws RuntimeException;
 
     /**
      * Try to build an operation object via the op name.
@@ -56,13 +42,13 @@ public abstract class Operation {
      * string. It doesn't contain the customized functions.
      * </p>
      * 
-     * @param opname The string of the operation name
+     * @param op_name The string of the operation name
      * @return the very operation object, or null if the operation doesn't exist
      */
-    static Operation build(String opname) {
+    static Operation build(String op_name) {
         Operation op;
         try {
-            Class<?> opClass = Class.forName("mua.operation." + opname);
+            Class<?> opClass = Class.forName("mua.operation." + op_name);
             op = (Operation) opClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             return null;
@@ -73,11 +59,11 @@ public abstract class Operation {
     /**
      * Test if there exists an operation with the name given
      * 
-     * @param opname The name of operation
+     * @param op_name The name of operation
      * @return If the operation exists
      */
-    static boolean isOperation(String opname) {
-        return build(opname) != null;
+    static boolean isOperation(String op_name) {
+        return build(op_name) != null;
     }
 
     /**

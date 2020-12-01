@@ -1,5 +1,6 @@
 package mua.operation;
 
+import mua.assets.Arguments;
 import mua.value.Value;
 
 /**
@@ -8,10 +9,10 @@ import mua.value.Value;
  * Return the value as the result of a function. Parse the first value in the
  * args and set the rest args to empty string, return the first value
  */
-public class _return extends Operation {
+public class _return implements Operation {
     @Override
-    Value execute(Arguments args) {
-        Value v = parseValue(args);
+    public Value execute(Arguments args) {
+        Value v = Operation.parseValue(args);
         args.set("");
         return execute(v);
     }

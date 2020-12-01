@@ -1,15 +1,15 @@
-package mua;
+package mua.assets;
 
 import java.util.*;
 
 import mua.value.*;
-import mua.operation.Function;
+import mua.value.Function;
 
 public class Namespace {
 
     static final Namespace global = new Namespace(null);
 
-    // initally global
+    // initially global
     static Namespace curSpace = global;
 
     public static void initializeGlobalSpace() {
@@ -35,7 +35,6 @@ public class Namespace {
 
     Namespace upper;
     HashMap<String, Value> nameList = new HashMap<>();
-    HashMap<String, Function> functionList = new HashMap<>();
 
     public Namespace(Namespace s) {
         upper = s;
@@ -54,7 +53,7 @@ public class Namespace {
     }
 
     void _assignFunction(String name, Function fun) {
-        functionList.put(name, fun);
+        nameList.put(name, fun);
     }
 
     public static void assignFunction(String name, Function fun) {
@@ -98,7 +97,10 @@ public class Namespace {
     }
 
     Function _getFunction(String name) {
-        return functionList.get(name);
+        Value v = nameList.get(name);
+        if (v == null || !v.isFunction())
+            return null;
+        return (Function) nameList.get(name);
     }
 
     public static Function getFunction(String name) {

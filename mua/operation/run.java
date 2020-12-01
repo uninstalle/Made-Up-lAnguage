@@ -1,5 +1,6 @@
 package mua.operation;
 
+import mua.assets.Arguments;
 import mua.value.*;
 
 /**
@@ -8,10 +9,10 @@ import mua.value.*;
  * Run a code segment inside the List, and return the last value of the code
  * segment.
  */
-class run extends Operation {
+class run implements Operation {
     @Override
-    Value execute(Arguments args) {
-        Value v = parseValue(args);
+    public Value execute(Arguments args) {
+        Value v = Operation.parseValue(args);
         if (v.isList())
             return execute((List) v);
         else
@@ -24,7 +25,7 @@ class run extends Operation {
         Arguments args = new Arguments(op);
         Value retval = Value.build("[]");
         while (!args.isEmpty())
-            retval = parse(args);
+            retval = Operation.parse(args);
         return retval;
     }
 }

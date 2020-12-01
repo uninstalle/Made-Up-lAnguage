@@ -1,11 +1,11 @@
 package mua.value;
 
-import mua.Infix;
+import mua.assets.Infix;
 
 /**
- * {@code Value} is the abstract class for all value in MUA. It has a set of useful static methods.
+ * {@code Value} is the interface for all value in MUA. It has a set of useful static methods.
  */
-public abstract class Value {
+public interface Value {
 
     /**
      * Build a {@code Value} from given string.
@@ -28,26 +28,28 @@ public abstract class Value {
             return null;
     }
 
-    public boolean isNumber() {
+    default public boolean isNumber() {
         return this instanceof Number;
     }
 
-    public boolean isWord() {
+    default public boolean isWord() {
         return this instanceof Word;
     }
 
-    public boolean isList() {
+    default public boolean isList() {
         return this instanceof List;
     }
 
-    public boolean isBool() {
+    default public boolean isBool() {
         return this instanceof Bool;
     }
+
+    default public boolean isFunction() {return this instanceof  Function;}
 
     /**
      * This will return the raw string of class {@code Value} stores.
      * @return raw string of the value
      */
-    public abstract String toRawString();
+    String toRawString();
 
 }

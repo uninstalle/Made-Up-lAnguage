@@ -1,8 +1,9 @@
 package mua.operation;
 
+import mua.assets.Arguments;
 import mua.value.*;
-import mua.Name;
-import mua.Namespace;
+import mua.assets.Name;
+import mua.assets.Namespace;
 
 /**
  * erase [Name]
@@ -10,10 +11,10 @@ import mua.Namespace;
  * Erase the variable with given name in current namespace, return the erased
  * value
  */
-class erase extends Operation {
+class erase implements Operation {
     @Override
-    Value execute(Arguments args) {
-        return execute(parseName(args));
+    public Value execute(Arguments args) {
+        return execute(Operation.parseName(args));
     }
 
     Value execute(Name name) {
