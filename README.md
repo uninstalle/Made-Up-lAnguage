@@ -116,48 +116,46 @@ prt "hello
   * 如果全局已经有了同名的变量，则替换全局变量的值
   * 在函数内 make 出来的函数一样可以被 export 到全部
 
-第三次做到这里[^备注]
+第三次做到这里
 
-[^备注]: P3有个上面没提到的feature，要支持:function返回function的list形式值
+_P3有个上面没提到的feature，要支持:function返回function的list形式值_
 
 
 
 ## 字表处理
 
-readlist ：返回一个从标准输入读取的一行，构成一个表，行中每个以空格分隔的部分是list的一
-个元素，元素的类型为字
-用 readlist 读入的只可能是单层的表
-word \<word\> \<word|number|bool\> ：将两个word合并为一个word，第⼆个值可以是word、
-number或bool
-sentence \<value1\> \<value2\> ：将value1和value2合并成一个表，两个值的元素并列，value1
-的在value2的前面
-list \<value1\> \<value2\> ：将两个值合并为一个表，如果值为表，则不打开这个表
-join \<list\> \<value\> ：将value作为list的最后一个元素加入到list中（如果value是表，则整个
-value成为表的最后一个元素）
-first \<word|list\> ：返回word的第一个字符，或list的第一个元素
-last \<word|list\> ：返回word的最后一个字符，list的最后一个元素
-make "prt [
- [a]
- [print :a]
-]
-butfirst \<word|list\> ：返回除第一个元素外剩下的表，或除第一个字符外剩下的字
-butlast \<word|list\> ：返回除最后一个元素外剩下的表，或除最后一个字符外剩下的字
+* `readlist` ：返回一个从标准输入读取的一行，构成一个表，行中每个以空格分隔的部分是list的一个元素，元素的类型为字
+  * 用 `readlist` 读入的只可能是单层的表
+* `word <word> <word|number|bool>` ：将两个word合并为一个word，第二个值可以是word、number或bool
+
+* `sentence <value1> <value2>` ：将value1和value2合并成一个表，两个值的元素并列，value1的在value2的前面
+
+* `list <value1> <value2>` ：将两个值合并为一个表，如果值为表，则不打开这个表
+
+* `join <list> <value>` ：将value作为list的最后一个元素加入到list中（如果value是表，则整个value成为表的最后一个元素）
+
+* `first <word|list>` ：返回word的第一个字符，或list的第一个元素
+
+* `last <word|list>` ：返回word的最后一个字符，list的最后一个元素
+
+* `butfirst <word|list>` ：返回除第一个元素外剩下的表，或除第一个字符外剩下的字
+
+* `butlast <word|list>` ：返回除最后一个元素外剩下的表，或除最后一个字符外剩下的字
 
 ## 数值计算
 
-random \<number\> ：返回[0,number)的一个随机数
-int \<number\> : floor the int
-sqrt \<number\> ：返回number的平方根
+* `random <number>` ：返回[0,number)的一个随机数
+* `int <number>` ： floor the int
+* `sqrt <number>` ：返回number的平方根
 
 ## 其他操作
 
-save \<word\> ：保存当前命名空间在word文件中，返回文件名
-load \<word\> ：从word文件中装载内容，加入当前命名空间，返回true
-erall ：清除当前命名空间的全部内容，返回true
-poall ：列出当前命名空间的全部名字的list
+* `save <word>` ：保存当前命名空间在word文件中，返回文件名
+* `load <word>` ：从word文件中装载内容，加入当前命名空间，返回true
+* `erall` ：清除当前命名空间的全部内容，返回true
+* `poall` ：列出当前命名空间的全部名字的list
 
 ## 既有名字
 
-系统提供了一些常用的量，或可以由其他操作实现但是常用的操作，作为固有的名字。这些名字是可以
-被删除（erase）的。
-pi ：3.14159
+系统提供了一些常用的量，或可以由其他操作实现但是常用的操作，作为固有的名字。这些名字是可以被删除（erase）的。
+* `pi` ：3.14159
