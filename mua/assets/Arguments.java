@@ -15,6 +15,13 @@ import mua.Main;
  * </p>
  */
 public class Arguments {
+
+    public static void main(String[] args) {
+        Arguments arg = new Arguments("[][][[()]](())()");
+        while (!arg.isEmpty())
+            System.out.println(arg.nextToken());
+    }
+
     String args;
 
     public Arguments(String str) {
@@ -45,11 +52,11 @@ public class Arguments {
         if (args == null)
             throw new IllegalStateException("Argument is null");
         else if (args.equals(""))
-            args = Main.getNextCommand().trim();
+            args = Main.getNextCommand();
 
         if (args.contains(" ")) {
             substr = args.substring(0, args.indexOf(" "));
-            args = args.substring(args.indexOf(" ") + 1).trim();
+            args = args.substring(args.indexOf(" ") + 1);
         } else {
             substr = args;
             args = "";
@@ -70,6 +77,15 @@ public class Arguments {
         return substr;
     }
 
+    /**
+     * Insert a string in the front of the Argument string
+     * 
+     * @param str string for inserting
+     */
+    public void insertStr(String str) {
+        args = str + " " + args;
+    }
+
     public boolean isEmpty() {
         return args == null || args.equals("");
     }
@@ -81,34 +97,81 @@ public class Arguments {
      * @return String contains the next token
      */
     public String nextToken() {
-        StringBuilder op_name = new StringBuilder(nextSubStr());
+        String str = nextSubStr();
+        String op_name;
 
         // The token is a list, creating list
-        if (op_name.toString().startsWith("[")) {
-            int level = 0;
-            level += op_name.length() - op_name.toString().replace("[", "").length();
-            level -= op_name.length() - op_name.toString().replace("]", "").length();
-
-            while (level != 0) {
-                String nextArg = " " + nextSubStr();
-                op_name.append(nextArg);
-                level += nextArg.length() - nextArg.replace("[", "").length();
-                level -= nextArg.length() - nextArg.replace("]", "").length();
-            }
-        }
+        if (str.startsWith("["))
+            op_name = parseList(str);
         // Token is an infix exp, creating infix exp
-        else if (op_name.toString().startsWith("(")) {
-            int level = 0;
-            level += op_name.length() - op_name.toString().replace("(", "").length();
-            level -= op_name.length() - op_name.toString().replace(")", "").length();
+        else if (str.startsWith("("))
+            op_name = parseInfix(str);
+        else
+            op_name = str;
 
-            while (level != 0) {
-                String nextArg = " " + nextSubStr();
-                op_name.append(nextArg);
-                level += nextArg.length() - nextArg.replace("(", "").length();
-                level -= nextArg.length() - nextArg.replace(")", "").length();
+        return op_name;
+    }
+
+    String parseList(String str) {
+        int level = 0;
+        boolean brk = false;
+        StringBuilder op_name = new StringBuilder();
+
+        do {
+            for (int i = 0; i < str.length(); ++i) {
+                if (str.charAt(i) == '[')
+                    level++;
+                else if (str.charAt(i) == ']')
+                    level--;
+                if (level == 0) {
+                    // if i == str.length() - 1, then nothing needs to be sent back
+                    if (i != str.length() - 1)
+                        insertStr(str.substring(i + 1));
+                    str = str.substring(0, i + 1);
+                    brk = true;
+                    break;
+                }
             }
-        }
+            if (!op_name.toString().equals(""))
+                op_name.append(" " + str);
+            else
+                op_name.append(str);
+            if (brk)
+                break;
+            str = nextSubStr();
+        } while (level != 0);
+
+        return op_name.toString();
+    }
+
+    String parseInfix(String str) {
+        int level = 0;
+        boolean brk = false;
+        StringBuilder op_name = new StringBuilder();
+
+        do {
+            for (int i = 0; i < str.length(); ++i) {
+                if (str.charAt(i) == '(')
+                    level++;
+                else if (str.charAt(i) == ')')
+                    level--;
+                if (level == 0) {
+                    // if i == str.length() - 1, then nothing needs to be sent back
+                    if (i != str.length() - 1)
+                        insertStr(str.substring(i + 1));
+                    str = str.substring(0, i + 1);
+                    brk = true;
+                    break;
+                }
+            }
+            if (!op_name.toString().equals(""))
+                op_name.append(" " + str);
+            else
+                op_name.append(str);
+            if (brk)
+                break;
+            str = nextSubStr();
+        } while (level != 0);
 
         return op_name.toString();
     }

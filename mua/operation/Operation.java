@@ -171,9 +171,9 @@ public interface Operation {
     static Name parseNameLabel(Arguments args) {
         String op_name = args.nextToken();
 
-        Function fun = Namespace.getFunction(op_name);
-        if (fun != null)
-            return parseNameLabel(new Arguments(fun.execute(args).toString()));
+        //Function fun = Namespace.getFunction(op_name);
+        //if (fun != null)
+        //    return parseNameLabel(new Arguments(fun.execute(args).toString()));
         Operation op = Operation.build(op_name);
         if (op != null)
             return parseNameLabel(new Arguments(op.execute(args).toString()));

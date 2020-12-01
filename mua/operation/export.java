@@ -23,7 +23,7 @@ public class export implements Operation {
         Function f = Namespace.getFunction(name.toString());
         Value v = Namespace.get(name);
         if (f != null) {
-            Namespace.assignGlobalFunction(name.toString(), f);
+            Namespace.assignGlobal(name.toString(), f);
             return f;
         } else if (v != null) {
             Namespace.assignGlobal(name, v);

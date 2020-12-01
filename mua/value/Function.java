@@ -33,7 +33,7 @@ public class Function extends List implements Operation {
 
         Function function = new Function();
         function.parameters = para.toString().substring(1, para.toString().length() - 1).split(" ");
-        function.operations = op.toString().substring(1, op.toString().length() - 1);
+        function.operations = op.toString().substring(1, op.toString().length() - 1).trim();
         function.value = functionList.toString();
         return function;
     }
@@ -52,7 +52,7 @@ public class Function extends List implements Operation {
     public static boolean isFunction(Value functionList) {
         if (!functionList.isList())
             return false;
-        String functionString = functionList.toString().substring(1, functionList.toString().length() - 1);
+        String functionString = functionList.toString().trim().substring(1, functionList.toString().length() - 1);
         Arguments functionCode = new Arguments(functionString);
         // with two and only two list objects as its element
         return List.isList(functionCode.nextToken()) && List.isList(functionCode.nextToken()) && functionCode.isEmpty();

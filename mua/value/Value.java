@@ -44,7 +44,7 @@ public interface Value {
         return this instanceof Bool;
     }
 
-    default public boolean isFunction() {return this instanceof  Function;}
+    default public boolean isFunction() {return this instanceof Function;}
 
     /**
      * This will return the raw string of class {@code Value} stores.

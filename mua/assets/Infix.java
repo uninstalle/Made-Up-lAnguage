@@ -29,7 +29,8 @@ public class Infix {
     }
 
     /**
-     * Try to build a infix expression class from given string. Given string should contains infix exp mark ().
+     * Try to build a infix expression class from given string. Given string should
+     * contains infix exp mark ().
      *
      * @param value infix exp string
      * @return infix expression object
@@ -51,6 +52,7 @@ public class Infix {
         value = value.replaceAll("(?<=[\\(\\)])", " ");
         value = value.replaceAll("(?<=([0-9A-Za-z]{1,50}|\\))\\s{0,50}[\\+\\-\\*/%])", " ");
         value = value.replaceAll("(?<=([0-9A-Za-z]{1,50}|\\))\\s{0,50})(?=[\\+\\-\\*/%])", " ");
+        value = value.replaceAll("[\\s]+", " ");
     }
 
     /**

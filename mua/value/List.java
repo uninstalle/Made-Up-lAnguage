@@ -22,6 +22,7 @@ public class List implements Value {
      * @return Whether the string contains a list
      */
     public static boolean isList(String value) {
+        value = value.trim();
         if (!(value.startsWith("[") && value.endsWith("]")))
             return false;
 

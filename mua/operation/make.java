@@ -24,7 +24,7 @@ class make implements Operation {
 
     Value execute(Name name, Value value) {
         if (Function.isFunction(value))
-            Namespace.assignFunction(name.toString(), Function.build((List) value));
+            Namespace.assign(name.toString(), Function.build((List) value));
         else
             Namespace.assign(name, value);
         return value;

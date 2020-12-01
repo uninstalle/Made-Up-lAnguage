@@ -12,8 +12,12 @@ public class Namespace {
     // initially global
     static Namespace curSpace = global;
 
-    public static void initializeGlobalSpace() {
+    public static void initializeGlobalNamespace() {
         assign(Name.build("pi"), Value.build("3.14159"));
+    }
+
+    public static void setCurrentNamespaceGlobal() {
+        curSpace = global;
     }
 
     public static void addNestedNamespace() {
@@ -23,6 +27,8 @@ public class Namespace {
     public static void deleteNestedNamespace() {
         if (curSpace.upper != null)
             curSpace = curSpace.upper;
+        else
+            throw new IllegalStateException("Trying to delete global namespace");
     }
 
     public static Namespace getCurrentNamespace() {
@@ -40,36 +46,32 @@ public class Namespace {
         upper = s;
     }
 
-    void _assign(Name name, Value value) {
-        nameList.put(name.toString(), value);
+    void _assign(String name, Value value) {
+        nameList.put(name, value);
     }
 
     public static void assign(Name name, Value value) {
+        curSpace._assign(name.toString(), value);
+    }
+
+    public static void assign(String name, Value value) {
         curSpace._assign(name, value);
     }
 
     public static void assignGlobal(Name name, Value value) {
+        global._assign(name.toString(), value);
+    }
+
+    public static void assignGlobal(String name, Value value) {
         global._assign(name, value);
-    }
-
-    void _assignFunction(String name, Function fun) {
-        nameList.put(name, fun);
-    }
-
-    public static void assignFunction(String name, Function fun) {
-        curSpace._assignFunction(name, fun);
-    }
-
-    public static void assignGlobalFunction(String name, Function fun) {
-        global._assignFunction(name, fun);
-    }
-
-    public static Value get(Name name) {
-       return get(name.toString());
     }
 
     Value _get(String name) {
         return nameList.get(name);
+    }
+
+    public static Value get(Name name) {
+        return get(name.toString());
     }
 
     public static Value get(String name) {
@@ -84,27 +86,18 @@ public class Namespace {
         return v;
     }
 
-    Function _getFunction(String name) {
-        Value v = nameList.get(name);
-        if (v == null || !v.isFunction())
-            return null;
-        return (Function) nameList.get(name);
-    }
-
     public static Function getFunction(String name) {
         Namespace ns = curSpace;
-        Function f = ns._getFunction(name);
-        while (f == null) {
+        Value v = ns._get(name);
+        while (v == null) {
             if (ns.upper == null)
                 break;
             ns = ns.upper;
-            f = ns._getFunction(name);
+            v = ns._get(name);
         }
-        return f;
-    }
-
-    public static Value erase(Name name) {
-        return curSpace._erase(name);
+        if (v == null || !v.isFunction())
+            return null;
+        return (Function)v;
     }
 
     public Value _erase(Name name) {
@@ -115,5 +108,9 @@ public class Namespace {
             nameList.remove(name.toString());
             return v;
         }
+    }
+
+    public static Value erase(Name name) {
+        return curSpace._erase(name);
     }
 }

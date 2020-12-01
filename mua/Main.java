@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Namespace.initializeGlobalSpace();
+        Namespace.initializeGlobalNamespace();
 
         while (stdin.hasNextLine()) {
             String cmd = getNextCommand();
@@ -20,6 +20,7 @@ public class Main {
                     Operation.parse(cmd);
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
+                Namespace.setCurrentNamespaceGlobal();
             }
         }
         stdin.close();
@@ -27,15 +28,14 @@ public class Main {
 
     public static String getNextCommand() {
         String cmd = stdin.nextLine();
-        cmd = replaceAllOperation(cmd);
+        cmd = formatCommand(cmd).trim();
         return cmd;
     }
 
-    static String replaceAllOperation(String raw) {
+    static String formatCommand(String raw) {
 
         raw = raw.replace(":", "thing ");
-        raw = raw.replace("\t", " ");
-        raw = raw.replace("\n", " ");
+        raw = raw.replaceAll("[\\s]+", " ");
         raw = replaceOperation(raw, "if", "_if");
         raw = replaceOperation(raw, "return", "_return");
 
