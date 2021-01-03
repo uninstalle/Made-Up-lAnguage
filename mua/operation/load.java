@@ -20,7 +20,7 @@ public class load implements Operation {
         if (Namespace.load(filename.toString()))
             return Bool.build(true);
         else {
-            System.out.println("bbbb");
+            //System.out.println("bbbb");
             return Bool.build(false);
         }
     }

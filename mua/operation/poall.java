@@ -21,7 +21,7 @@ public class poall implements Operation {
         Map<String, Value> m = Namespace.getMap();
         List l = List.build("[]");
         for (String str : m.keySet()) {
-            l.append(Word.build(str));
+            l.append(Word.build("\"" + str));
         }
         return l;
     }
