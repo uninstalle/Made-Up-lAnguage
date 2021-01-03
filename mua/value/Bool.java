@@ -4,6 +4,13 @@ package mua.value;
  * This class contains a boolean value. It can be true or false.
  */
 public class Bool implements Value {
+
+    public static void main(String[] args) {
+        System.out.println(build(true));
+        System.out.println(build("false"));
+        System.out.println(build("trueandfalse"));
+    }
+
     Boolean value;
 
     Bool(String value) {
@@ -12,9 +19,12 @@ public class Bool implements Value {
         else if (value.equals("false"))
             this.value = false;
         else
-            throw new IllegalArgumentException("Trying building a Bool with illegal value:" + value);
+            throw new IllegalArgumentException("Trying to build a Bool with illegal value:" + value);
     }
 
+    /**
+     * Test if the given string is a valid Bool
+     */
     public static boolean isBool(String value) {
         return value.equals("true") || value.equals("false");
     }
@@ -44,6 +54,9 @@ public class Bool implements Value {
         return new Bool(value.toString());
     }
 
+    /**
+     * @return the boolean value of this Value
+     */
     public boolean get() {
         return value;
     }
@@ -56,5 +69,10 @@ public class Bool implements Value {
     @Override
     public String toRawString() {
         return value.toString();
+    }
+
+    @Override
+    public Word toWord() {
+        return new Word("\"" + value.toString());
     }
 }

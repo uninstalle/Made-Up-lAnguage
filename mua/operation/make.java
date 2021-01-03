@@ -11,9 +11,11 @@ import mua.assets.Namespace;
  * Assign a variable with the given Name with the given Value. The Name should
  * be a raw string with a Word mark "
  * <p>
- * Define a function with the given Name with the given code. The Name should be
- * a raw string with a Word mark ". The first sub List is parameters, and the
- * second is function body.
+ * Or define a function with the given Name with the given code. The Name should
+ * be a raw string with a Word mark ". Function is similar to List. It is
+ * surrounded by a pair of [], and has two objects. The first is a parameter
+ * list(not List type), and the second is a CodeBlock containing the function
+ * body.
  */
 class make implements Operation {
 
@@ -23,10 +25,7 @@ class make implements Operation {
     }
 
     Value execute(Name name, Value value) {
-        if (Function.isFunction(value))
-            Namespace.assign(name.toString(), Function.build(value.toList()));
-        else
-            Namespace.assign(name, value);
+        Namespace.assign(name, value);
         return value;
     }
 }

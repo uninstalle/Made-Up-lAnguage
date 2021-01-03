@@ -10,8 +10,7 @@ import mua.value.Value;
  * export [Name]
  * <p>
  * Export the variable inside a function namespace to global namespace, and
- * return the value, Export a function is supported, but cannot return the
- * function itself
+ * return the value, Export a function is supported.
  */
 public class export implements Operation {
     @Override

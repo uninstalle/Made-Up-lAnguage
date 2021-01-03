@@ -36,6 +36,14 @@ import mua.operation.export;
  */
 public interface Operation {
 
+    public static void main(String[] args) {
+        String test = "add";
+        System.out.println(isOperation(test));
+        System.out.println(isOperator(test));
+    }
+
+    final String CLASSPREFIX = "mua.operation.";
+
     /**
      * The only abstract function of {@code Operation}.
      *
@@ -63,7 +71,7 @@ public interface Operation {
     static Operation build(String op_name) {
         Operation op;
         try {
-            Class<?> opClass = Class.forName("mua.operation." + op_name);
+            Class<?> opClass = Class.forName(CLASSPREFIX + op_name);
             op = (Operation) opClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             return null;
@@ -78,7 +86,23 @@ public interface Operation {
      * @return If the operation exists
      */
     static boolean isOperation(String op_name) {
-        return build(op_name) != null;
+        try {
+            Class.forName(CLASSPREFIX + op_name);
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+        return true;
+    }
+
+    static boolean isOperator(String op_name) {
+        Operation op;
+        try {
+            Class<?> opClass = Class.forName(CLASSPREFIX + op_name);
+            op = (Operation) opClass.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            return false;
+        }
+        return op instanceof Operator;
     }
 
     /**
@@ -113,7 +137,7 @@ public interface Operation {
      * @return The parsed value, or null if it is not a valid value
      */
     static Value parseValue(Arguments args) {
-        String op_name = args.nextToken();
+        String op_name = args.nextToken(true);
 
         // Test if it is a function
         Function fun = Namespace.getFunction(op_name);
@@ -142,7 +166,7 @@ public interface Operation {
      * @return The parsed name, or null if it is not a valid name
      */
     static Name parseName(Arguments args) {
-        String op_name = args.nextToken();
+        String op_name = args.nextToken(true);
 
         // Try to build a function or operation first in case that building a variable
         // named the same as an function or operation
@@ -169,11 +193,11 @@ public interface Operation {
      * @return The parsed name, or null if it is not a valid name
      */
     static Name parseNameLabel(Arguments args) {
-        String op_name = args.nextToken();
+        String op_name = args.nextToken(true);
 
-        //Function fun = Namespace.getFunction(op_name);
-        //if (fun != null)
-        //    return parseNameLabel(new Arguments(fun.execute(args).toString()));
+        // Function fun = Namespace.getFunction(op_name);
+        // if (fun != null)
+        // return parseNameLabel(new Arguments(fun.execute(args).toString()));
         Operation op = Operation.build(op_name);
         if (op != null)
             return parseNameLabel(new Arguments(op.execute(args).toString()));

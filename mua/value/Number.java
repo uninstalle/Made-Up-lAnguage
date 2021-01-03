@@ -1,7 +1,8 @@
 package mua.value;
 
 /**
- * This class contains a number value. It can be integer or float, but always convert to float in calculations.
+ * This class contains a number value. It can be integer or float, but always
+ * convert to float in calculations.
  */
 public class Number implements Value {
     String value;
@@ -10,6 +11,9 @@ public class Number implements Value {
         this.value = value;
     }
 
+    /**
+     * Test if the given string is a valid Number
+     */
     public static boolean isNumber(String value) {
         return isInteger(value) || isFloat(value);
     }
@@ -36,6 +40,21 @@ public class Number implements Value {
             return null;
     }
 
+    public int toInt() {
+        return Integer.parseInt(value);
+    }
+
+    public double toDouble() {
+        return Double.parseDouble(value);
+    }
+
+    /**
+     * @return the double value of this Value
+     */
+    public double get() {
+        return toDouble();
+    }
+
     @Override
     public String toString() {
         return value;
@@ -46,11 +65,8 @@ public class Number implements Value {
         return value;
     }
 
-    public int toInt() {
-        return Integer.parseInt(value);
-    }
-
-    public double toDouble() {
-        return Double.parseDouble(value);
+    @Override
+    public Word toWord() {
+        return new Word("\"" + value);
     }
 }

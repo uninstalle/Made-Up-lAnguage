@@ -21,9 +21,11 @@ class run implements Operation {
     }
 
     Value execute(List list) {
-        String op = list.toString().substring(1, list.toString().length() - 1);
-        Arguments args = new Arguments(op);
         Value retVal = Value.build("[]");
+        if (list.isEmpty())
+            return retVal;
+        String op = list.getElements().get(0).toString();
+        Arguments args = new Arguments(op);
         while (!args.isEmpty())
             retVal = Operation.parse(args);
         return retVal;

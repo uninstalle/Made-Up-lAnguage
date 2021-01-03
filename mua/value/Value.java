@@ -3,24 +3,42 @@ package mua.value;
 import mua.assets.Infix;
 
 /**
- * {@code Value} is the interface for all value in MUA. It has a set of useful static methods.
+ * {@code Value} is the interface for all values in MUA. It has a set of useful
+ * static methods.
  */
 public interface Value {
 
-    static void main(String[] args) {
-        Function f = Function.build(List.build("[[][]]"));
-        System.out.println(f.toList());
+    public static void main(String[] args) {
+        Value number = Value.build("-1234.5678");
+        System.out.println(number);
+        Value bool = Value.build("false");
+        System.out.println(bool);
+        Value word = Value.build("true");
+        System.out.println(word.toRawString());
+        Value list = Value.build("[1 2.0 -3.1 false \"abab]");
+        System.out.println(list);
+        Value infix = Value.build("((1+3)*5)");
+        System.out.println(infix);
+        Value function = Value.build("[[] [print 1]]");
+        System.out.println(function);
     }
 
     /**
-     * Build a {@code Value} from given string.
+     * Build a {@code Value} from given string. The string may have blank in its
+     * front and back, but should contain only one Value.
      *
      * @param value a string that may contain a Value
      * @return {@code Value} object, or null if it has no valid value
      */
     static Value build(String value) {
         value = value.trim();
-        if (Infix.isInfix(value))
+        // Every Value Class has two ways to instantialize: Use static build method, or
+        // use constructor. Build method will trim the string and check if the string is
+        // valid, but constructor doesn't check. Here we have trimmed the string and
+        // will check the string, thus we use the constructor.
+        if (Function.isFunction(value))
+            return new Function(value);
+        else if (Infix.isInfix(value))
             return new Infix(value).getValue();
         if (Number.isNumber(value))
             return new Number(value);
@@ -54,29 +72,68 @@ public interface Value {
         return this instanceof Function;
     }
 
-    default Number toNumber() {
-        if (isNumber()) return (Number) this;
-        else throw new ClassCastException("Cannot convert to Number");
+    default boolean isCodeBlock() {
+        return this instanceof CodeBlock;
     }
 
-    default Word toWord() {
-        if (isWord()) return (Word) this;
-        else throw new ClassCastException("Cannot convert to Word");
+    /**
+     * Try to convert this Value to Number. If it is a Number, return itself.
+     */
+    default Number toNumber() throws ClassCastException {
+        if (isNumber())
+            return (Number) this;
+        else
+            throw new ClassCastException("This Value cannot convert to Number");
     }
 
-    default List toList() {
-        if (isList()) return (List) this;
-        else throw new ClassCastException("Cannot convert to List");
+    /**
+     * Try to convert this Value to Word. If it is a Word, return itself.
+     */
+    default Word toWord() throws ClassCastException {
+        if (isWord())
+            return (Word) this;
+        else
+            throw new ClassCastException("This Value cannot convert to Word");
     }
 
-    default Bool toBool() {
-        if (isBool()) return (Bool) this;
-        else throw new ClassCastException("Cannot convert to Bool");
+    /**
+     * Try to convert this Value to List. If it is a List, return itself.
+     */
+    default List toList() throws ClassCastException {
+        if (isList())
+            return (List) this;
+        else
+            throw new ClassCastException("This Value cannot convert to List");
     }
 
-    default Function toFunction() {
-        if(isFunction()) return (Function) this;
-        else throw new ClassCastException("Cannot convert to Function");
+    /**
+     * Try to convert this Value to Bool. If it is a Bool, return itself.
+     */
+    default Bool toBool() throws ClassCastException {
+        if (isBool())
+            return (Bool) this;
+        else
+            throw new ClassCastException("This Value cannot convert to Bool");
+    }
+
+    /**
+     * Try to convert this Value to Function. If it is a Function, return itself.
+     */
+    default Function toFunction() throws ClassCastException {
+        if (isFunction())
+            return (Function) this;
+        else
+            throw new ClassCastException("This Value cannot convert to Function");
+    }
+
+    /**
+     * Try to convert this Value to CodeBlock. If it is a CodeBlock, return itself.
+     */
+    default CodeBlock toCodeBlock() throws ClassCastException {
+        if (isCodeBlock())
+            return (CodeBlock) this;
+        else
+            throw new ClassCastException("This Value cannot convert to CodeBlock");
     }
 
     /**
