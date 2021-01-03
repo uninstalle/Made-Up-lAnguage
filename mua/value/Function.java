@@ -42,8 +42,7 @@ public class Function extends List implements Operation {
 
     /**
      * Test if the string contains a valid function, which is a List that contains a
-     * parameter list and a function body. The variables in the parameter list has
-     * no Word marker ", thus it should be build as CodeBlock too.
+     * parameter list and a function body.
      *
      * <p>
      * This function will not check if parameter declaration and code are valid.
@@ -59,8 +58,7 @@ public class Function extends List implements Operation {
             return false;
         try {
             // empty List is considered as CodeBlock too.
-            boolean hasPara = l.elements.get(0).toList().isEmpty()
-                    || l.elements.get(0).toList().elements.get(0).isCodeBlock();
+            boolean hasPara = l.elements.get(0).isList();
             boolean hasBody = l.elements.get(1).toList().isEmpty()
                     || l.elements.get(1).toList().elements.get(0).isCodeBlock();
             return hasPara && hasBody;

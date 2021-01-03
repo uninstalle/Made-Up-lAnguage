@@ -39,6 +39,7 @@ public class Main {
         raw = raw.replaceAll("[\\s]+", " ");
         raw = replaceOperation(raw, "if", "_if");
         raw = replaceOperation(raw, "return", "_return");
+        raw = replaceOperation(raw, "int", "_int");
 
         return raw;
     }

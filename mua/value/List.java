@@ -2,7 +2,6 @@ package mua.value;
 
 import java.util.ArrayList;
 import mua.assets.Arguments;
-import mua.operation.Operation;
 
 /**
  * This class contains a list value. It stores the raw string of the list.
@@ -14,11 +13,6 @@ public class List implements Value {
     List(String value) {
         parseList(value);
         calculateLevel(value);
-    }
-
-    List(List l) {
-        elements = l.elements;
-        level = l.level;
     }
 
     /**
@@ -84,16 +78,24 @@ public class List implements Value {
             elements.add(new CodeBlock(elementString));
             return;
         }
-        
+
         Arguments el = new Arguments(elementString);
         while (!el.isEmpty()) {
-            Value v = Operation.parseValue(el);
+            String token = el.nextToken(true);
+            Value v = Value.build(token);
+            if (v == null) {
+                v = Word.build("\"" + token);
+            }
             elements.add(v);
         }
     }
 
     public java.util.List<Value> getElements() {
         return elements;
+    }
+
+    public void append(Value v) {
+        elements.add(v);
     }
 
     /**

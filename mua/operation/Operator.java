@@ -102,7 +102,11 @@ class eq implements Operator {
         if (a.isWord() && b.isWord())
             return execute(a.toWord(), b.toWord());
         else
-            return execute(a.toNumber(), b.toNumber());
+            try {
+                return execute(a.toNumber(), b.toNumber());
+            } catch (ClassCastException e) {
+                return Bool.build("false");
+            }
     }
 
     Value execute(Number a, Number b) {

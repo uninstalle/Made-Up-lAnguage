@@ -1,5 +1,10 @@
 package mua.assets;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 
 import mua.value.*;
@@ -12,7 +17,7 @@ import mua.value.Function;
  * it will first search current loaded namespace, then search its parent if not
  * found, until it reaches global namespace.
  */
-public class Namespace {
+public class Namespace implements Serializable {
 
     public static void main(String[] args) {
         initializeGlobalNamespace();
@@ -173,5 +178,31 @@ public class Namespace {
      */
     public static Value erase(Name name) {
         return curSpace._erase(name);
+    }
+
+    public static void eraseAll() {
+        curSpace.nameList.clear();
+    }
+
+    public static Map<String, Value> getMap() {
+        return curSpace.nameList;
+    }
+
+    public static boolean save(String filename) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
+            oos.writeObject(curSpace);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean load(String filename) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            curSpace = (Namespace) ois.readObject();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

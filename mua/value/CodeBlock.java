@@ -26,11 +26,7 @@ public class CodeBlock implements Value {
 
         // If element contains commands, then this is a CodeBlock
         // We may endure an operator to support constant expressions like add 1 2
-        if ((Operation.isOperation(token) && !Operation.isOperator(token))
-                // if element contains something that is not Value, then it is a CodeBlock
-                || Value.build(token) == null
-                // if element contains user functions, then it is a CodeBlock
-                || Value.build(token).isFunction()) {
+        if (Operation.isOperation(token) && !Operation.isOperator(token)) {
             return true;
         }
         return false;

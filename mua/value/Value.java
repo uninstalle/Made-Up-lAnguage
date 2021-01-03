@@ -1,12 +1,14 @@
 package mua.value;
 
+import java.io.Serializable;
+
 import mua.assets.Infix;
 
 /**
  * {@code Value} is the interface for all values in MUA. It has a set of useful
  * static methods.
  */
-public interface Value {
+public interface Value extends Serializable {
 
     public static void main(String[] args) {
         Value number = Value.build("-1234.5678");

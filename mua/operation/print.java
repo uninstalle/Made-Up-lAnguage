@@ -15,7 +15,10 @@ class print implements Operation {
     }
 
     Value execute(Value value) {
-        System.out.println(value);
+        if (value.isList())
+            System.out.println(value.toString().substring(1, value.toString().length() - 1));
+        else
+            System.out.println(value);
         return value;
     }
 }

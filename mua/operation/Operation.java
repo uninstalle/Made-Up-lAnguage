@@ -22,6 +22,22 @@ import mua.operation.isbool;
 import mua.operation.isempty;
 import mua.operation._return;
 import mua.operation.export;
+import mua.operation.random;
+import mua.operation._int;
+import mua.operation.sqrt;
+import mua.operation.first;
+import mua.operation.last;
+import mua.operation.butfirst;
+import mua.operation.butlast;
+import mua.operation.erall;
+import mua.operation.poall;
+import mua.operation.word;
+import mua.operation.sentence;
+import mua.operation.list;
+import mua.operation.join;
+import mua.operation.readlist;
+import mua.operation.save;
+import mua.operation.load;
 
 /**
  * The interface of predefined operations of MUA.
